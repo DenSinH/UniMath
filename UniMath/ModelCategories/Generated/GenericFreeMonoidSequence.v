@@ -43,12 +43,14 @@ Context (CL : Chains C).
 Context (CE : Coequalizers C).
 
 (** the horizontal map can be constructed from the vertical map:
+<<
               TXβ
                 |
                 | xβ
                 v
   Xβ --------> Xβ1
      τXβ · xβ
+>>
   where τ is the unit of our pointed endofunctor (T, τ).
 *)
 Local Definition pair_diagram : UU :=
@@ -90,17 +92,19 @@ Defined.
 Definition next_pair_diagram_coeq (xβ : pair_diagram) :=
     CE _ _ (next_pair_diagram_coeq_arr0 xβ) (next_pair_diagram_coeq_arr1 xβ).
 
+(** Part of the sequence that we are considering:
+<<
+  TXβ-1 --> TXβ ----> TXβ1
+    |        |         |
+    |     xβ |         | xβ1
+    v        v         v
+    Xβ ----> Xβ1 ----> Xβ2
+        fβ
+>>
+*)
+(** the next "left object" is Xβ1 *)
 Definition next_pair_diagram (xβ : pair_diagram) : pair_diagram.
 Proof.
-  (** Part of the sequence that we are considering:
-    TXβ-1 --> TXβ ----> TXβ1
-      |        |         |
-      |     xβ |         | xβ1
-      v        v         v
-      Xβ ----> Xβ1 ----> Xβ2
-          fβ
-  *)
-  (** the next "left object" is Xβ1 *)
   exists (pair_diagram_rob xβ).
 
   set (coeq := next_pair_diagram_coeq xβ).
@@ -118,7 +122,7 @@ Proof.
   induction n as [|β xβ].
   - exists A, (T ⊗_{V} A).
     exact (identity _).
-    (** initial arrow is I ⟹ T *)
+    (* initial arrow is I ⟹ T *)
   - exact (next_pair_diagram xβ).
 Defined.
 
@@ -164,7 +168,7 @@ Proof.
   - intro n. exact (dob c (S n)).
   - intros m n e.
     use (dmor c).
-    (** do NOT abstract this, otherwise the recursion will not
+    (* do NOT abstract this, otherwise the recursion will not
        resolve. *)
     now rewrite <- e.
 Defined.
@@ -1392,6 +1396,15 @@ Proof.
 Qed.
 
 
+(** Need to show that
+<<
+                                  mon_map
+  Xα+ --> Xα+ ⊗ I --> Xα+ ⊗ T∞ -------> T∞
+                    =
+  Xα+ ----------------------------------> T∞
+                  colimIn
+>>
+*)
 Lemma Tinf_monoid_unit_right_pointwise (v : vertex nat_graph) :
   ruinv^{ V }_{ pair_diagram_lob (free_monoid_coeq_sequence_on I_{ V} v)}
   · (pair_diagram_lob (free_monoid_coeq_sequence_on I_{ V} v)
@@ -1399,13 +1412,6 @@ Lemma Tinf_monoid_unit_right_pointwise (v : vertex nat_graph) :
     · free_monoid_coeq_sequence_diagram_on_Tinf_Tinf_map v) =
   colimIn free_monoid_coeq_sequence_colim_unit v.
 Proof.
-  (** Need to show that
-                                   mon_map
-    Xα+ --> Xα+ ⊗ I --> Xα+ ⊗ T∞ -------> T∞
-                      =
-    Xα+ ----------------------------------> T∞
-                   colimIn
-  *)
   induction v as [|v IHv].
   {
     etrans. apply cancel_precomposition.
@@ -1723,7 +1729,7 @@ Lemma rt_chain_iso_pair_ind_inv_iscoeqout
 Proof.
   set (totrel := rt_chain_iso_pair_rel_impl_total_rel (rtisp_rel Cisp)).
 
-  (** inverse of total relation *)
+  (* inverse of total relation *)
   assert (totrel' :
       pair_diagram_horizontal_arrow (free_monoid_coeq_sequence_on A v)
       · inv_from_z_iso (rtisp_riso Cisp)
@@ -1966,7 +1972,7 @@ Proof.
   exact (rtisp_rel (rt_chain_iso_pairs A v)).
 Qed.
 
-(** no longer need exact definition of chain iso pairs *)
+(* no longer need exact definition of chain iso pairs *)
 Opaque rt_chain_iso_pairs.
 
 Lemma rt_chain_colim_iso (A : C) :
@@ -2035,7 +2041,7 @@ Proof.
                   apply (monoidal_associatorisolaw V).
           apply id_left.
 
-  (** reduced back down to first step *)
+  (* reduced back down to first step *)
   set (ccTinf := free_monoid_coeq_sequence_colim_on I_{V}).
   set (rt_ccTinf := rt_chain Tinf _ _ _ (isColimCocone_from_ColimCocone ccTinf)).
   set (rt_colim := free_monoid_coeq_sequence_rightwhisker_colim_on Tinf I_{V}).

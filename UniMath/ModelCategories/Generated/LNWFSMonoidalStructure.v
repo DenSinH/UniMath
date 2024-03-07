@@ -174,11 +174,11 @@ Proof.
   intros f g γ.
   use arrow_mor_eq;
       [etrans; [apply id_right|]; apply pathsinv0; apply id_left|].
-  (** work away left side (final step of comul_data was
+  (* work away left side (final step of comul_data was
      to use L' to get a lift in a specific diagram) *)
   etrans.
   {
-    (** rewrite naturality of L' at #ρ γ *)
+    (* rewrite naturality of L' at #ρ γ *)
     etrans. apply assoc.
     set (L'natργ := nat_trans_ax (pr1 L') _ _ (#(fact_R F) γ)).
     set (L'natργ11 := pr2 (pathsdirprodweq (base_paths _ _ L'natργ))).
@@ -198,13 +198,13 @@ Proof.
   etrans. use (pr1_section_disp_on_morphisms_comp F').
   use (section_disp_on_eq_morphisms F'); [|etrans; [apply id_left|]; apply pathsinv0; apply id_right].
 
-  (** work away on right side, first step in comul_data
+  (* work away on right side, first step in comul_data
       was to obtain a lift using L *)
   apply pathsinv0.
   etrans. apply assoc.
   etrans. apply cancel_postcomposition.
   {
-    (** rewrite naturality of L *)
+    (* rewrite naturality of L *)
     set (Lnatγ := nat_trans_ax (pr1 L) _ _ γ).
     set (Lnatγ11 := pr2 (pathsdirprodweq (base_paths _ _ Lnatγ))).
     exact (Lnatγ11).
@@ -223,8 +223,8 @@ Proof.
   (* cbn.
   unfold three_mor11, three_mor01.
   cbn. *)
-  (** commutativity of F' on morphism #ρ γ *)
-  (** middle step was composing a diagram in a specific way *)
+  (* commutativity of F' on morphism #ρ γ *)
+  (* middle step was composing a diagram in a specific way *)
   apply pathsinv0.
   exact (pr1 (three_mor_comm (#(fact_functor F') (#(fact_R F ) γ)))).
 Qed.
@@ -257,7 +257,7 @@ Proof.
   set (law3 := @Comonad_law3 _ (L_monad _ _ (pr2 L))).
   set (law3' := @Comonad_law3 _ (L_monad _ _ (pr2 L'))).
 
-  (** First we want to rewrite the associativity law for F' *)
+  (* First we want to rewrite the associativity law for F' *)
   apply pathsinv0.
   etrans. apply assoc'.
   etrans. apply cancel_precomposition, assoc.
@@ -279,7 +279,7 @@ Proof.
   etrans. apply assoc'.
   apply cancel_precomposition.
 
-  (** What is left is F' applied to the associativity law of F *)
+  (* What is left is F' applied to the associativity law of F *)
   etrans. apply cancel_precomposition.
           apply (pr1_section_disp_on_morphisms_comp F').
   etrans. apply (pr1_section_disp_on_morphisms_comp F').
@@ -306,14 +306,14 @@ Proof.
     etrans. apply assoc'.
     apply cancel_precomposition.
 
-    (** what is left is F applied to some morphism *)
+    (* what is left is F applied to some morphism *)
     etrans. apply cancel_precomposition.
             apply (pr1_section_disp_on_morphisms_comp F).
     etrans. apply (pr1_section_disp_on_morphisms_comp F).
     apply pathsinv0.
     etrans. apply (pr1_section_disp_on_morphisms_comp F).
     apply (section_disp_on_eq_morphisms F).
-    * (** 00 morphism is just identities, as always *)
+    * (* 00 morphism is just identities, as always *)
       apply pathsinv0.
       etrans. apply cancel_postcomposition.
               exact (lnwfs_Σ_top_map_id L a).
@@ -1059,7 +1059,7 @@ Proof.
   split.
   - exact (pr2 L).
   - use Ff_monoid_is_RNWFS.
-    (** project monoid R down to Ff C *)
+    (* project monoid R down to Ff C *)
     exact (LNWFS_tot_monoid_projection R).
 Defined.
 

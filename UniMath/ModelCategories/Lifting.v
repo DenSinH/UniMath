@@ -36,6 +36,7 @@ Definition elp {x y a b : C} (f : x --> y) (g : a --> b) : UU :=
 
 (** Lean: llp @ https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/model/wfs.lean#L18 *)
 (**
+<<
        g
     A ---> E
     |     /|
@@ -43,6 +44,7 @@ Definition elp {x y a b : C} (f : x --> y) (g : a --> b) : UU :=
     v /    v
     X ---> B
        f
+>>
 *)
 Section Lp.
 Local Open Scope logic.
@@ -59,17 +61,17 @@ Proof.
   unfold "⊆" in *.
   intros ? ? f H.
   intros ? ? g K.
-  (** LLP for i in R' *)
+  (* LLP for i in R' *)
   apply (H _ _ g).
-  (** R ⊆ R' *)
+  (* R ⊆ R' *)
   apply (h _ _ g).
-  (** i in R *)
+  (* i in R *)
   exact K.
 Qed.
 
 End Lifting.
 
-(** not in Lean file *)
+(* not in Lean file *)
 Lemma opp_rlp_is_llp_opp {C : category} (L : morphism_class C) :
     morphism_class_opp (rlp L) = (llp (morphism_class_opp L)).
 Proof.
@@ -78,21 +80,21 @@ Proof.
   - intro rlpf.
     intros a b g hg.
     intros top bottom H.
-    (** extract lift fro rlp of f with respect to the opposite morphism of g *)
+    (* extract lift fro rlp of f with respect to the opposite morphism of g *)
     use (rlpf _ _ (rm_opp_mor g)).
     * exact hg.
-    (** flip diagram *)
+    (* flip diagram *)
     * exact (rm_opp_mor bottom).
     * exact (rm_opp_mor top).
-    (** commutativity *)
+    (* commutativity *)
     * symmetry.
       exact H.
-    * (** extract lift *)
+    * (* extract lift *)
       intros hl.
       destruct hl as [l [hlg hlf]].
       apply hinhpr.
 
-      (** the opposite morphism of the lift is the lift of the opposite diagram *)
+      (* the opposite morphism of the lift is the lift of the opposite diagram *)
       exists (opp_mor l).
       split; assumption.
   - intro rlpf.

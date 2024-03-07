@@ -131,7 +131,7 @@ Lemma Ff_iso_inv_LNWFS_mor
     (Hiso : (pr2 L) -->[iso] (pr2 L')) :
   pr2 L' -->[z_iso_inv iso] pr2 L.
 Proof.
-  (** base mor component at f is z_iso (obvious since base_mor is an iso) *)
+  (* base mor component at f is z_iso (obvious since base_mor is an iso) *)
   transparent assert (Hiso11 : (∏ f, is_z_isomorphism (three_mor11 (section_nat_trans (z_iso_mor iso) f)))).
   {
     intro f.

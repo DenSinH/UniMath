@@ -76,6 +76,7 @@ Proof.
 Defined.
 
 (** define a chain of middle objects from a cocone, i.e.
+<<
   X0 --> X1 --> X2 --> X3 ...
     \    |f1  f2|     /
    f0 \  |      |   / f3
@@ -85,7 +86,7 @@ Defined.
     \    |Rf1   |     /
   Rf0 \  |   Rf2|   / Rf3
             Y
-
+>>
 *)
 Definition fact_cocone_chain
     (F : Ff C)
@@ -120,11 +121,13 @@ Proof.
 Defined.
 
 (** define coconeIn to colimArrow morphism for cocone, i.e.
+<<
     Xv ----> X∞
     |        |
     |        |
     v        v
     Y ====== Y
+>>
 *)
 Definition coconeIn_colimArrow_mor
     {d : chain C} {y : C}
@@ -408,7 +411,7 @@ Proof.
   set (ccpointwise := Ff_cocone_pointwise_R d f).
   set (isHRCC' := HR _ _ ccpointwise).
 
-  (** correct codomain with equality of diagrams *)
+  (* correct codomain with equality of diagrams *)
   set (eqdiag := fact_cocone_chain_eq_chain_pointwise_tensored F d f).
   set (isHRCC := eq_diag_iscolimcocone _ eqdiag isHRCC').
   exact (make_ColimCocone _ _ _ isHRCC).
@@ -515,7 +518,9 @@ Proof.
 Qed.
 
 (** define the natural transformation we want from
+<<
    (F ⊗_{Ff_mon} (colim CL)) (colim FfCC)
+>>
    using the z_iso we got from the smallness. *)
 Definition FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_data
     (F : Ff C)
@@ -782,7 +787,7 @@ Proof.
     abstract (
       exact (Ff_lt_preserves_colim_impl_LNWFS_lt_preserves_colim_mor_disp HF)
     ).
-  - (** showing isomorphism is easy, since we know that the base morphism is an isomorphism *)
+  - (* showing isomorphism is easy, since we know that the base morphism is an isomorphism *)
     abstract (
       apply LNWFS_inv_in_precat_if_Ff_inv_in_precat;
       exact (Ff_lt_preserves_colim_impl_LNWFS_lt_preserves_colim_inv_in_precat HF)

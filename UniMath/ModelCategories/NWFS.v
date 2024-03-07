@@ -87,11 +87,11 @@ Proof.
     * exact (three_mor12 xxx).
   - intros xxx yyy fff.
     (* simpl. *)
-    (** for morphisms we simply forget the 0th morphism *)
+    (* for morphisms we simply forget the 0th morphism *)
     use mors_to_arrow_mor.
     * exact (three_mor11 fff).
     * exact (three_mor22 fff).
-    * (** commutativity is just commutativity in the lower diagram *)
+    * (* commutativity is just commutativity in the lower diagram *)
       abstract (
         apply pathsinv0;
         exact (pr2 (three_mor_comm fff))
@@ -155,14 +155,16 @@ Proof.
   exact (three_comp fg).
 Defined.
 
+(** this natural transformation boils down to square
+<<
+  0 ===== 0
+  |       |
+  |       |
+  1 ----> 2
+>>
+*)
 Definition c_21_data : nat_trans_data face_map_2 face_map_1.
 Proof.
-  (** this natural transformation boils down to square
-    0 ===== 0
-    |       |
-    |       |
-    1 ----> 2
-  *)
   intro xxx.
   simpl.
   exists (make_dirprod (identity _) (three_mor12 xxx)).
@@ -176,10 +178,10 @@ Defined.
 
 Definition c_21_axioms : is_nat_trans _ _ c_21_data.
 Proof.
-  (** natural transformation commutativity axiom *)
+  (* natural transformation commutativity axiom *)
   intros xxx yyy ff.
 
-  (** use displayed properties to turn path in total category
+  (* use displayed properties to turn path in total category
   into path in base category, given our displayed properties
 
   subtypePath: equality on ∑ x : X, P x is the same as equality
@@ -190,7 +192,7 @@ Proof.
   propositional: commutative diagram.
   *)
   apply subtypePath.
-  * (** For any map in the base category, the induced map
+  * (* For any map in the base category, the induced map
     on the displayed category is a property.
 
     This is because the induced map is a commuting square,
@@ -198,7 +200,7 @@ Proof.
     says this is a property. *)
     intro.
     apply homset_property.
-  * (** We are left to prove the commutativity in the base category,
+  * (* We are left to prove the commutativity in the base category,
     given our displayed properties. This is effectively just commutativity
     in the bottom square. *)
     apply pathsdirprod.
@@ -212,14 +214,16 @@ Qed.
 Definition c_21 : face_map_2 ⟹ face_map_1 :=
     (_,, c_21_axioms).
 
+(** this natural transformation boils down to square
+<<
+  0 ----> 1
+  |       |
+  |       |
+  2 ===== 2
+>>
+*)
 Definition c_10_data : nat_trans_data face_map_1 face_map_0.
 Proof.
-  (** this natural transformation boils down to square
-    0 ----> 1
-    |       |
-    |       |
-    2 ===== 2
-  *)
   intro xxx.
   exists (make_dirprod (three_mor01 xxx) (identity _)).
   abstract (
@@ -252,7 +256,7 @@ Arguments face_map_0 {_}.
 Arguments face_map_1 {_}.
 Arguments face_map_2 {_}.
 
-(** Lemma face_map_1_preserves_dom {C : category} : ∏ g : three C, arrow_dom (face_map_1 g) = three_ob0 g.
+(* Lemma face_map_1_preserves_dom {C : category} : ∏ g : three C, arrow_dom (face_map_1 g) = three_ob0 g.
 Proof.
   trivial.
 Defined.
@@ -496,12 +500,14 @@ Definition nwfs_L_maps {C : category} (n : nwfs C) :=
 
 (**
 Shape of comonad morphism diagram (2.15, Garner)
+<<
   A ===== A ===== A  ~~> id_A
   |       |       |
 f |   α   |λf  η  | f
   v       v       v
   B ---> Kf ----> B  ~~> id_B
      s       ρ_f
+>>
 *)
 Lemma R_map_section_comm {C : category} {n : nwfs C} {a b : C} {f : a --> b}
     (hf : nwfs_L_maps n f) (s := pr211 hf) :
@@ -515,10 +521,10 @@ Proof.
   cbn in ida, s, αfcomm.
   simpl in hαfη.
 
-  (** top line of hαfη: *)
+  (* top line of hαfη: *)
   assert (ida = identity a) as Hida.
   {
-    (** base_paths : equality in pr1 of ∑-type (paths in base category)
+    (* base_paths : equality in pr1 of ∑-type (paths in base category)
        pathsdirprodweq : _ × _ = _ × _ -> equality of terms
     *)
     set (top_line := dirprod_pr1 (pathsdirprodweq (base_paths _ _ hαfη))).
@@ -527,15 +533,15 @@ Proof.
   }
 
   split.
-  - (** f ⋅ s = λ_f *)
-    (** commutativity and ida = identity a *)
+  - (* f ⋅ s = λ_f *)
+    (* commutativity and ida = identity a *)
     specialize (αfcomm) as αfcomm'.
     unfold ida in Hida.
     rewrite Hida, id_left in αfcomm'.
     apply pathsinv0.
     exact αfcomm'.
-  - (** s · ρ_f = id_b *)
-    (** bottom line of hαfη *)
+  - (* s · ρ_f = id_b *)
+    (* bottom line of hαfη *)
     set (bottom_line := dirprod_pr2 (pathsdirprodweq (base_paths _ _ hαfη))).
     exact bottom_line.
 Qed.
@@ -551,12 +557,14 @@ Defined.
 
 (**
 Shape of monad morphism diagram (2.15, Garner)
+<<
      λg       p
   C ---> Kg ----> C  ~~> id_C
   |       |       |
 g |   η   |ρg  α  | g
   v       v       v
   D ===== D ===== D  ~~> id_D
+>>
 *)
 Lemma L_map_retraction_comm {C : category} {n : nwfs C} {c d : C} {g : c --> d}
     (hg : nwfs_R_maps n g) (p := pr111 hg) :
@@ -570,10 +578,10 @@ Proof.
   cbn in p, idd, αgcomm.
   simpl in hαgη.
 
-  (** bottom line of hαgη: *)
+  (* bottom line of hαgη: *)
   assert (idd = identity d) as Hidd.
   {
-    (** base_paths : equality in pr1 of ∑-type (paths in base category)
+    (* base_paths : equality in pr1 of ∑-type (paths in base category)
        pathsdirprodweq : _ × _ = _ × _ -> equality of terms
     *)
     set (bottom_line := dirprod_pr2 (pathsdirprodweq (base_paths _ _ hαgη))).
@@ -582,14 +590,14 @@ Proof.
   }
 
   split.
-  - (** p ⋅ g = ρ_g *)
-    (** commutativity and ida = identity a *)
+  - (* p ⋅ g = ρ_g *)
+    (* commutativity and ida = identity a *)
     specialize (αgcomm) as αgcomm'.
     unfold idd in Hidd.
     rewrite Hidd, id_right in αgcomm'.
     exact αgcomm'.
-  - (** λg · p = id_c *)
-    (** top line of hαfη *)
+  - (* λg · p = id_c *)
+    (* top line of hαfη *)
     set (top_line := dirprod_pr1 (pathsdirprodweq (base_paths _ _ hαgη))).
     exact top_line.
 Qed.
@@ -607,7 +615,7 @@ Lemma L_map_R_map_elp {C : category} {n : nwfs C} {a b c d : C}
     {f : a --> b} {g : c --> d} (hf : nwfs_L_maps n f)
     (hg : nwfs_R_maps n g) : elp f g.
 Proof.
-  (** want to construct a lift of an L-map and an R-map
+  (* want to construct a lift of an L-map and an R-map
      using monad properties *)
   intros h k H.
 
@@ -616,15 +624,15 @@ Proof.
 
   set (hk := mors_to_arrow_mor f g h k H).
   set (Fhk := functor_on_morphisms (fact_functor n) hk).
-  (** Kf --> Kg *)
+  (* Kf --> Kg *)
   set (Khk := three_mor11 Fhk).
 
-  (** commutativity in diagrams *)
+  (* commutativity in diagrams *)
   set (Hhk := three_mor_comm Fhk).
   simpl in Hhk.
   destruct Hhk as [Hhk0 Hhk1].
 
-  (**
+  (*
               h
     A ==== A ----> C
     |      |       |
@@ -642,41 +650,41 @@ Proof.
 
   abstract (
     split; [
-      (** f · (s · Khk · p) = h *)
+      (* f · (s · Khk · p) = h *)
       rewrite assoc, assoc;
       rewrite Hs0;
-      (** λ_f · Khk · p = h *)
-      (** rewrite Hhk0 : (λ_f · Hhk = h · λ_g) *)
+      (* λ_f · Khk · p = h *)
+      (* rewrite Hhk0 : (λ_f · Hhk = h · λ_g) *)
       etrans; [apply maponpaths_2;
                exact Hhk0|];
-      (** h · λ_g · p = h *)
-      (** rewrite Hp1 : (λ_g · p = id_C) *)
+      (* h · λ_g · p = h *)
+      (* rewrite Hp1 : (λ_g · p = id_C) *)
       rewrite <- assoc;
       etrans; [apply maponpaths;
                exact Hp1|];
-      (** h · id_C = h *)
+      (* h · id_C = h *)
       now rewrite id_right
-    | (** s · Khk · p · g = k *)
+    | (* s · Khk · p · g = k *)
       rewrite <- (assoc _ p g);
       rewrite Hp0;
-      (** s · Khk · ρ_g = k *)
-      (** rewrite Hhk1 : ρ_f · k = Khk · ρ_g *)
+      (* s · Khk · ρ_g = k *)
+      (* rewrite Hhk1 : ρ_f · k = Khk · ρ_g *)
       rewrite <- assoc;
       etrans; [apply maponpaths;
                exact (pathsinv0 Hhk1)|];
-      (** s · ρ_f · k = k *)
-      (** rewrite Hs1 : s · ρ_f = id_B *)
+      (* s · ρ_f · k = k *)
+      (* rewrite Hs1 : s · ρ_f = id_B *)
       rewrite assoc;
       etrans; [apply maponpaths_2;
                exact Hs1|];
-      (** id_B · k = k *)
+      (* id_B · k = k *)
       now rewrite id_left
     ]
   ).
 Defined.
 
 
-(**
+(*
  * CATEGORY OF NWFS's ON A CATEGORY C
  **)
 
@@ -701,7 +709,7 @@ Lemma fact_mor_whisker_d1_is_id {C : category} {F F' : functorial_factorization 
 Proof.
   apply nat_trans_eq.
   - apply homset_property.
-  - intro. (** ~~> identity x = identity x *)
+  - intro. (* ~~> identity x = identity x *)
     trivial.
 Qed.
 
@@ -846,7 +854,7 @@ Proof.
   exact (monads_category_id_subproof _ (pr2 n)).
 Qed.
 
-(** Lemma fact_id_is_nwfs_mor (n : nwfs C) : nwfs_mor_axioms n n (Ff_precategory_id (nwfs_fact n)).
+(* Lemma fact_id_is_nwfs_mor (n : nwfs C) : nwfs_mor_axioms n n (Ff_precategory_id (nwfs_fact n)).
 Proof.
   split.
   - apply fact_id_is_lnwfs_mor.
@@ -863,14 +871,14 @@ Lemma lnwfs_mor_comp {F F' F'' : Ff C}
     (ax' : lnwfs_mor_axioms n' n'' τ') :
   lnwfs_mor_axioms n n'' (τ · τ').
 Proof.
-  (** Like for identity, we just show that the composition of the morphisms
+  (* Like for identity, we just show that the composition of the morphisms
      corresponds with the composition of the corresponding L and R monad
      morphisms. *)
   assert (lnwfs_mor n n'' (τ · τ') =
           nat_trans_comp _ _ _ (lnwfs_L_monad_mor τ ax) (lnwfs_L_monad_mor τ' ax')) as H.
   {
     use nat_trans_eq.
-    - (** for some reason this definition is completely unfolded *)
+    - (* for some reason this definition is completely unfolded *)
       exact (homset_property (arrow C)).
     - intro x.
       use arrow_mor_eq.
@@ -909,7 +917,7 @@ Proof.
           nat_trans_comp _ _ _ (rnwfs_R_monad_mor τ ax) (rnwfs_R_monad_mor τ' ax')) as H.
   {
     use nat_trans_eq.
-    - (** for some reason this definition is completely unfolded *)
+    - (* for some reason this definition is completely unfolded *)
       exact (homset_property (arrow C)).
     - intro x; simpl in x.
       apply subtypePath; [intro; apply homset_property|].

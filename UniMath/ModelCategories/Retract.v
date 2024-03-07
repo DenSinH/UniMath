@@ -59,13 +59,13 @@ Lemma retract_is_iso {x y x' y' : C} {f : iso x y} {f' : x' --> y'}
 Proof.
   destruct r as [ix [rx [iy [ry [hx [hy [hi hr]]]]]]].
 
-  (** we construct an explicit inverse from the retract dixgram *)
+  (* we construct an explicit inverse from the retract dixgram *)
   apply is_iso_from_is_z_iso.
 
-  (** inverse is ra ∘ f^{-1} ∘ iy *)
+  (* inverse is ra ∘ f^{-1} ∘ iy *)
   exists (iy · (inv_from_iso f) · rx).
   split.
-  (** dixgram chasing *)
+  (* dixgram chasing *)
   - rewrite assoc, assoc, <- hi.
     rewrite <- (assoc ix _ _).
     rewrite iso_inv_after_iso, id_right.

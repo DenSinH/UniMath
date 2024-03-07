@@ -87,7 +87,7 @@ Proof.
     set (l'rf := fact_L F' rf).
     set (r'rf := fact_R F' rf).
     apply subtypePath; [intro; apply isapropdirprod; apply homset_property|].
-    (** complex rewrite *)
+    (* complex rewrite *)
     cbn.
     rewrite (section_disp_id F).
     (* cbn.

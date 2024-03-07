@@ -272,7 +272,7 @@ Proof.
         use colimArrowUnique;
         intro u;
         etrans; [apply colimArrowCommutes|];
-        (** naturality of coconeIn cc at u *)
+        (* naturality of coconeIn cc at u *)
         etrans; [exact (pathsinv0 (pr22 (pr1 (coconeIn cc u) a)))|];
         apply id_right
       ).
@@ -465,7 +465,7 @@ Local Lemma LNWFS_colim_comul_data_subproof
     fact_L (pr1 (dob d v)) (fact_L (colim Finf) f).
 Proof.
   set (Lv := (dob d v)).
-  (** λf · σf · m11 = λ_{λ∞f}
+  (* λf · σf · m11 = λ_{λ∞f}
     where λf · σf = λλf (component of comul)
     and λλf · m11 = λ_{λ∞f} (commutativity of fact_L (pr1 Lv) (fact_L (colim Finf)) f)
   *)

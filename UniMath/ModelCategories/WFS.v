@@ -118,21 +118,21 @@ Proof.
   unfold wfs_L.
   rewrite (wfs_llp w).
   intros a b g hg h k s.
-  (** existence of lift in part of diagram *)
+  (* existence of lift in part of diagram *)
   use (wfs'lp w hf hg (h ∘ ra) (k ∘ rb) _).
   {
     rewrite <- assoc, s, assoc, assoc, hr.
     reflexivity.
   }
-  (** extract lift *)
+  (* extract lift *)
   intro hl.
   destruct hl as  [l [hlh hlk]].
 
-  (** turn proof into normal ∑-type *)
+  (* turn proof into normal ∑-type *)
   apply hinhpr.
-  (** composition in diagram *)
+  (* composition in diagram *)
   exists (l ∘ ib).
-  (** diagram chasing *)
+  (* diagram chasing *)
   split.
   * rewrite assoc, <- hi, <- assoc, hlh, assoc, ha, id_left.
     reflexivity.
@@ -185,16 +185,16 @@ Lemma retract_argument {L' : morphism_class C} (w : wfs C)
 Proof.
   intros x y f hf.
 
-  (** rcases H f with ⟨z, g, h, hg, hh, hgh⟩, *)
-  (** Get factorization for f from H *)
+  (* rcases H f with ⟨z, g, h, hg, hh, hgh⟩, *)
+  (* Get factorization for f from H *)
   specialize (H _ _ f) as eHf.
   simpl in eHf.
   use (hinhuniv _ eHf).
   intro Hf.
   destruct Hf as [z [g [h [hg [hh hgh]]]]].
 
-  (** rcases w.lp hf hh g (𝟙 _) (by rw hgh; simp) with ⟨l, hl₁, hl₂⟩, *)
-  (** Use lifting property to get map l in diagram *)
+  (* rcases w.lp hf hh g (𝟙 _) (by rw hgh; simp) with ⟨l, hl₁, hl₂⟩, *)
+  (* Use lifting property to get map l in diagram *)
   use (wfs'lp w hf hh g (identity _)).
   {
     rewrite hgh, id_right.
@@ -203,7 +203,7 @@ Proof.
   intro hl.
   destruct hl as [l [hl1 hl2]].
 
-  (** Show that f is a retract of g *)
+  (* Show that f is a retract of g *)
   assert (r : retract g f).
   {
     use (make_retract (identity _) (identity _) l h).
@@ -214,10 +214,10 @@ Proof.
     - rewrite id_left. now symmetry.
   }
 
-  (** convert goal to normal ∑-type *)
+  (* convert goal to normal ∑-type *)
   apply hinhpr.
 
-  (** finish proof *)
+  (* finish proof *)
   exists x, z, g, r.
   exact hg.
 Qed.
@@ -228,14 +228,14 @@ Lemma lp_isos_univ {x y a b : C} (f : x --> y) (g : a --> b) :
 Proof.
   intro H.
   set (fiso := make_iso _ H).
-  (** change f to the isomorphism in the goal *)
+  (* change f to the isomorphism in the goal *)
   change (lp fiso g).
 
   intros h k s.
-  (** lift we are looking for is h ∘ f^{-1} *)
+  (* lift we are looking for is h ∘ f^{-1} *)
   apply hinhpr.
   exists (h ∘ (inv_from_iso fiso)).
-  (** diagram chasing *)
+  (* diagram chasing *)
   split.
   * rewrite assoc, iso_inv_after_iso, id_left.
     reflexivity.
@@ -249,14 +249,14 @@ Lemma lp_univ_isos {x y a b : C} (f : x --> y) (g : a --> b) :
 Proof.
   intro H.
   set (fiso := make_iso _ H).
-  (** change f to the isomorphism in the goal *)
+  (* change f to the isomorphism in the goal *)
   change (lp g fiso).
 
   intros h k s.
-  (** lift we are looking for is h ∘ f^{-1} *)
+  (* lift we are looking for is h ∘ f^{-1} *)
   apply hinhpr.
   exists ((inv_from_iso fiso) ∘ k).
-  (** diagram chasing *)
+  (* diagram chasing *)
   split.
   * rewrite assoc, <- s, <- assoc, iso_inv_after_iso, id_right.
     reflexivity.
@@ -268,44 +268,44 @@ Qed.
 Lemma llp_univ : llp (morphism_class_univ C) = morphism_class_isos C.
 Proof.
   apply morphism_class_subset_antisymm; intros x y f H.
-  - (** apply llp of f with itself *)
+  - (* apply llp of f with itself *)
     specialize ((H _ _ f) tt).
-    (** choose horizontal maps to be identity *)
+    (* choose horizontal maps to be identity *)
     use (H (identity _) (identity _)).
     {
-      (** commutativity of diagram *)
+      (* commutativity of diagram *)
       rewrite id_left, id_right.
       reflexivity.
     }
-    (** extract lift l from diagram *)
+    (* extract lift l from diagram *)
     intro hl.
     destruct hl as [l [hfl hlf]].
     unfold morphism_class_isos.
 
-    (** show f is a z_iso (we have its inverse, the lift l) *)
+    (* show f is a z_iso (we have its inverse, the lift l) *)
     assert (is_z_isomorphism f) as f_z_iso.
     {
       exists l.
       split; assumption.
     }
-    (** finish proof *)
+    (* finish proof *)
     apply is_iso_from_is_z_iso.
     exact f_z_iso.
   - intros a b g _.
-    (** other inclusion is exactly the previous Lemma *)
+    (* other inclusion is exactly the previous Lemma *)
     exact (lp_isos_univ f g H).
 Qed.
 
 (** https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/model/wfs.lean#L101 *)
 Lemma rlp_isos : rlp (morphism_class_isos C) = morphism_class_univ C.
 Proof.
-  (** This proof is slightly different *)
+  (* This proof is slightly different *)
   apply morphism_class_subset_antisymm.
-  - (** an iso is a morphism *)
+  - (* an iso is a morphism *)
     intros x y g H.
     unfold morphism_class_univ.
     exact tt.
-  - (** other inclusion is easy with previous Lemmas *)
+  - (* other inclusion is easy with previous Lemmas *)
     rewrite <- llp_univ.
     exact (rlp_llp_self _).
 Qed.
@@ -313,16 +313,16 @@ Qed.
 (** https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/model/wfs.lean#L109 *)
 Lemma wfs_isos_univ : is_wfs (morphism_class_isos C) (morphism_class_univ C).
 Proof.
-  (** apply symmetry to immediately exact the previous Lemmas *)
+  (* apply symmetry to immediately exact the previous Lemmas *)
   use make_is_wfs; try symmetry.
   - exact llp_univ.
   - exact rlp_isos.
-  - (** factorize a morphism through identity and itself *)
+  - (* factorize a morphism through identity and itself *)
     intros x y f.
     apply hinhpr.
     exists x, (identity x), f.
 
-    (** this solves the second subgoal, stating that f is a morphism *)
+    (* this solves the second subgoal, stating that f is a morphism *)
     repeat split.
     * exact (identity_is_iso C x).
     * rewrite id_left.
@@ -360,14 +360,14 @@ Section properties.
 Lemma wfs_L_contains_isos {C : category} (w : wfs C) :
     (morphism_class_isos C) ⊆ (wfs_L w).
 Proof.
-  (** isos are the llp of univ *)
+  (* isos are the llp of univ *)
   rewrite <- llp_univ.
-  (** rewrite llp property *)
+  (* rewrite llp property *)
   unfold wfs_L.
   rewrite (wfs_llp w).
 
   apply llp_anti.
-  (** every morphism is a morphism *)
+  (* every morphism is a morphism *)
   intros x y f hf.
   exact tt.
 Qed.
@@ -403,15 +403,15 @@ Proof.
   simpl in *.
   cbn.
 
-  (** need to show that f'p has rlp w.r.t. all i ∈ L *)
+  (* need to show that f'p has rlp w.r.t. all i ∈ L *)
   unfold wfs_R.
   rewrite (wfs_rlp w).
   intros a b i i_l.
 
-  (** commutative diagram *)
+  (* commutative diagram *)
   intros p1 g Hp1g.
 
-  (** obtain diagram
+  (* obtain diagram
       p1     p2
     a --> Pb --> x
    i|     |f'p   |p
@@ -420,7 +420,7 @@ Proof.
        g      f
   *)
 
-  (** use rlp of p to get lift  in outer diagram*)
+  (* use rlp of p to get lift  in outer diagram*)
   unfold wfs_R in p_r.
   rewrite (wfs_rlp w) in p_r.
 
@@ -430,12 +430,12 @@ Proof.
     reflexivity.
   }
 
-  (** extract lift *)
+  (* extract lift *)
   intro hl.
   destruct hl as [l [hl1 hl2]].
   symmetry in hl2.
 
-  (** use pullback property to get lift gh in
+  (* use pullback property to get lift gh in
           Pb --> x
     gh  /  |f'p  |p
       /    v     v
@@ -444,18 +444,18 @@ Proof.
   *)
   destruct (isPb _ g l hl2) as [[gh [hgh1 hgh2]] _].
 
-  (** gh is the lift in the inner diagram *)
+  (* gh is the lift in the inner diagram *)
   apply hinhpr.
   exists gh.
   split.
-  - (** use uniqueness of maps into pullback to show commutativity
+  - (* use uniqueness of maps into pullback to show commutativity
        in top triangle *)
     apply (MorphismsIntoPullbackEqual isPb).
     * rewrite <-assoc, hgh1, Hp1g.
       reflexivity.
     * rewrite <- assoc, hgh2, hl1.
       reflexivity.
-  - (** commutativity in lower triangle is trivial by pullback property *)
+  - (* commutativity in lower triangle is trivial by pullback property *)
     exact hgh1.
 Qed.
 
@@ -465,7 +465,7 @@ Lemma wfs_closed_pushouts {C : category} (w : wfs C)
     (Po : Pushout f p) :
   ((wfs_L w _ _) p) -> ((wfs_L w _ _) (PushoutIn1 Po)).
 Proof.
-  (** didn't expect Coq would be this powerful... *)
+  (* didn't expect Coq would be this powerful... *)
   apply (wfs_closed_pullbacks (opp_wfs _)).
 Qed.
 
@@ -479,20 +479,20 @@ Lemma wfs_closed_coproducts {C : category} {I : hSet} (w : wfs C)
   (wfs_L w _ _) (CoproductOfArrows _ _ CCa CCb f).
 Proof.
   unfold wfs_L in *.
-  (** create square with g ∈ R *)
+  (* create square with g ∈ R *)
   rewrite (wfs_llp w) in *.
   intros x y g hg.
   intros h k s.
 
-  (** obtain a square for all i ∈ I *)
-  (** factor maps from A_i / B_i through coproduct object *)
+  (* obtain a square for all i ∈ I *)
+  (* factor maps from A_i / B_i through coproduct object *)
   set (hi := λ i, (CoproductIn _ _ CCa i) · h).
   set (ki := λ i, (CoproductIn _ _ CCb i) · k).
 
   assert (∏ i, ∃ li, ((f i) · li = hi i) × (li · g = ki i)) as ilift.
   {
     intro i.
-    (** extract lift in i-th diagram *)
+    (* extract lift in i-th diagram *)
     specialize (hf i _ _ g hg) as H.
     specialize (H (hi i) (ki i)).
 
@@ -503,7 +503,7 @@ Proof.
     now rewrite (CoproductOfArrowsIn _ _).
   }
 
-  (** we need the axiom of choice here
+  (* we need the axiom of choice here
      it is basically exactly the definition of the axiom of choice *)
   assert (∥∏ i, ∑ li, ((f i) · li = hi i) × (li · g = ki i)∥) as ilift_aoc.
   {
@@ -513,7 +513,7 @@ Proof.
     exact ilift.
   }
 
-  (** obtain lift in original diagram *)
+  (* obtain lift in original diagram *)
   assert (∃ (li : (∏ i, (b i --> x))), (∏ i, (f i) · (li i) = hi i × ((li i) · g = ki i))) as ilifts.
   {
     use (hinhuniv _ ilift_aoc).
@@ -536,43 +536,43 @@ Proof.
   intro ilift_sig.
   destruct ilift_sig as [li hli].
 
-  (** turn individual lifts into lift from coproduct *)
+  (* turn individual lifts into lift from coproduct *)
   set (hl := isCoproduct_Coproduct _ _ CCb x li).
   destruct hl as [[l hl] uniqueness].
 
   apply hinhpr.
   exists l.
-  (** factor maps through coproduct object *)
+  (* factor maps through coproduct object *)
   split; rewrite CoproductArrowEta, (CoproductArrowEta _ _ _ _ _ l).
-  - (** factor f as well *)
+  - (* factor f as well *)
     rewrite (precompWithCoproductArrow).
 
-    (** maps are equal if maps through coproduct are equal *)
+    (* maps are equal if maps through coproduct are equal *)
     apply CoproductArrowUnique.
 
-    (** now we can reason in separate diagrams again *)
+    (* now we can reason in separate diagrams again *)
     intro i.
     rewrite CoproductInCommutes.
 
-    (** this is basically exactly the relation we want to prove: *)
+    (* this is basically exactly the relation we want to prove: *)
     destruct (hli i) as [hlicomm _].
 
-    (** by definition *)
+    (* by definition *)
     change (CoproductIn _ _ _ _ · h) with (hi i).
     rewrite (hl i).
     exact hlicomm.
-  - (** factor through coproduct object *)
+  - (* factor through coproduct object *)
     apply CoproductArrowUnique.
 
-    (** reason about separate diagrams again *)
+    (* reason about separate diagrams again *)
     intro i.
     rewrite assoc.
     rewrite CoproductInCommutes.
 
-    (** the relation we want to prove *)
+    (* the relation we want to prove *)
     destruct (hli i) as [_ klicomm].
 
-    (** by definition *)
+    (* by definition *)
     change (CoproductIn _ _ _ _ · k) with (ki i).
     rewrite (hl i).
     exact klicomm.
@@ -586,14 +586,14 @@ Lemma wfs_closed_products {C : category} {I : hSet} (w : wfs C)
     (aoc : AxiomOfChoice) :
   (wfs_R w _ _) (ProductOfArrows _ _ CCa CCb f).
 Proof.
-  (** again superpowers by Coq *)
+  (* again superpowers by Coq *)
   apply (wfs_closed_coproducts (opp_wfs w)).
   - exact hf.
   - exact aoc.
 Qed.
 
-(** this cannot be shown without AOC *)
-(** Lemma wfs_closed_transfinite_composition
+(* this cannot be shown without AOC *)
+(* Lemma wfs_closed_transfinite_composition
     {C : category}
     {d : chain C}
     {w : wfs C}
@@ -603,7 +603,7 @@ Qed.
   wfs_L w _ _ (colimIn CC 0).
 Proof.
   unfold wfs_L in *.
-  (** create square with g ∈ R *)
+  (* create square with g ∈ R *)
   rewrite (wfs_llp w) in *.
 
   intros a b g Rg h k hkcomm.
@@ -663,11 +663,11 @@ Proof.
     * intros u v e.
       simpl in e.
       rewrite <- e.
-      admit. (** also follows from definition of Hind... *)
+      admit. (* also follows from definition of Hind... *)
   - split.
     * etrans. apply colimArrowCommutes.
       cbn.
-      admit.  (** true by definition of Hind... *)
+      admit.  (* true by definition of Hind... *)
     * use colimArrowUnique'.
       intro v.
       etrans. apply assoc.
@@ -701,8 +701,8 @@ Proof.
     intros a b g' hg'.
     intros top bottom comm_total.
 
-    (** extract lp of λ_f and f (assumption) *)
-    (** this diagram has a lift
+    (* extract lp of λ_f and f (assumption) *)
+    (* this diagram has a lift
        x ==== x
   λ_f  |      | f
        |      |
@@ -717,10 +717,10 @@ Proof.
       exact (Hgh).
     }
     intro h'.
-    (** extract lift *)
+    (* extract lift *)
     destruct h' as [lift_lff [comm_lff1 comm_lff2]].
 
-    (** Since ρ_f ∈ R, this diagram has a lift
+    (* Since ρ_f ∈ R, this diagram has a lift
         top     λ_f
       a ---> x ---> Mf
     g |             | ρ_f
@@ -728,7 +728,7 @@ Proof.
       b ----------> y
            bottom
     *)
-    (** g and rf indeed have the rlp *)
+    (* g and rf indeed have the rlp *)
     assert (lp g' h) as lp_grf.
     {
       set (rf_r := Rh).
@@ -737,11 +737,11 @@ Proof.
       exact (rf_r _ _ g' hg').
     }
 
-    (** extract this lift *)
+    (* extract this lift *)
     use (lp_grf (g ∘ top) bottom).
     {
       rewrite <- assoc.
-      (** unfold wfs_left_map, wfs_right_map. *)
+      (* unfold wfs_left_map, wfs_right_map. *)
       rewrite (Hgh).
       exact comm_total.
     }
@@ -749,11 +749,11 @@ Proof.
     intro H.
     destruct H as [lift_grf [comm_grf1 comm_grf2]].
 
-    (** Compose lifts to get total lift *)
+    (* Compose lifts to get total lift *)
     apply hinhpr.
     exists (lift_lff ∘ lift_grf).
 
-    (** diagram chasing *)
+    (* diagram chasing *)
     split.
     * etrans. apply assoc.
       etrans. apply cancel_postcomposition.
@@ -766,12 +766,12 @@ Proof.
       etrans. apply cancel_precomposition.
               exact comm_lff2.
       exact comm_grf2.
-  - (** this side is easy, we know that f has a lift for all functions in L,
+  - (* this side is easy, we know that f has a lift for all functions in L,
        so also for its factorization *)
     intro hf.
     intros h' k Hk.
 
-    (** get factorization of f *)
+    (* get factorization of f *)
     unfold wfs_R in hf.
     rewrite wfs_rlp in hf.
     use hf.
