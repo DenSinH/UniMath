@@ -44,7 +44,7 @@ Section Ff_cocomplete_diagram.
 Context {g : graph} (d : diagram g (Ff C)).
 Context (H : is_connected g).
 
-(* diagram of middle objects *)
+(** diagram of middle objects *)
 Definition Ff_diagram_pointwise_ob1 (a : arrow C) : diagram g C.
 Proof.
   use tpair.
@@ -73,7 +73,7 @@ Proof.
     ).
 Defined.
 
-(* this construction only works for non-empty graphs, since
+(** this construction only works for non-empty graphs, since
    we need an arrow arrow_dom a --> colim (CCFf_pt_ob1 a),
    but we can only find this for a non-empty graph *)
 Definition ColimFf_ob (v0 : vertex g) (a : arrow C) : three_disp C a.
@@ -183,7 +183,7 @@ Definition ColimFf (v0 : vertex g) : Ff C :=
     (_,, ColimFf_axioms v0).
 
 
-(* we need an edge from v0 to v for this to work,
+(** we need an edge from v0 to v for this to work,
    regarding equality of (arrow_dom v/v0 · colimIn v/v0) *)
 Local Definition colim_nat_trans_in_data
       {v0 : vertex g} {v : vertex g} :
@@ -272,7 +272,7 @@ Proof.
         use colimArrowUnique;
         intro u;
         etrans; [apply colimArrowCommutes|];
-        (* naturality of coconeIn cc at u *)
+        (** naturality of coconeIn cc at u *)
         etrans; [exact (pathsinv0 (pr22 (pr1 (coconeIn cc u) a)))|];
         apply id_right
       ).
@@ -465,7 +465,7 @@ Local Lemma LNWFS_colim_comul_data_subproof
     fact_L (pr1 (dob d v)) (fact_L (colim Finf) f).
 Proof.
   set (Lv := (dob d v)).
-  (* λf · σf · m11 = λ_{λ∞f}
+  (** λf · σf · m11 = λ_{λ∞f}
     where λf · σf = λλf (component of comul)
     and λλf · m11 = λ_{λ∞f} (commutativity of fact_L (pr1 Lv) (fact_L (colim Finf)) f)
   *)

@@ -27,8 +27,8 @@ Local Open Scope cat.
 Local Open Scope mor_disp.
 Local Open Scope morcls.
 
-(* we can obtain a wfs from an nwfs *)
-(* the existence of an algebra map is exactly ||nwfs_R_maps_disp f|| *)
+(** we can obtain a wfs from an nwfs *)
+(** the existence of an algebra map is exactly ||nwfs_R_maps_disp f|| *)
 Definition nwfs_R_maps_class {C : category} (n : nwfs C) : morphism_class C :=
     λ (x y : C) (f : x --> y), ∥nwfs_R_maps n f∥.
 Definition nwfs_L_maps_class {C : category} (n : nwfs C) : morphism_class C :=
@@ -53,7 +53,7 @@ Proof.
   exact (L_map_class_R_map_class_lp hf hg).
 Qed.
 
-(* dual to above statement *)
+(** dual to above statement *)
 Lemma nwfs_R_maps_subs_rlp_L_maps {C : category} (n : nwfs C) :
     nwfs_R_maps_class n ⊆ rlp (nwfs_L_maps_class n).
 Proof.
@@ -103,7 +103,7 @@ Lemma nwfs_Lf_is_L_map {C : category} (n : nwfs C) :
 Proof.
   intro f.
 
-  (* unfold nwfs_L_maps_class, isCoAlgebra. *)
+  (** unfold nwfs_L_maps_class, isCoAlgebra. *)
   apply hinhpr.
   exists (nwfs_Σ n f).
   split; use arrow_mor_eq.
@@ -112,7 +112,7 @@ Proof.
     apply id_left.
   - exact (nwfs_Σ_bottom_map_inv n f).
   - apply cancel_precomposition.
-    (* rhs is just pr11 nwfs_Σ n f
+    (** rhs is just pr11 nwfs_Σ n f
         unfold three_mor00; simpl. *)
     apply pathsinv0.
     etrans. exact (nwfs_Σ_top_map_id n f).
@@ -121,13 +121,13 @@ Proof.
   - exact (nwfs_Σ_bottom_map_L_is_middle_map_of_Σ _ _).
 Qed.
 
-(* dual statement *)
+(** dual statement *)
 Lemma nwfs_Rf_is_R_map {C : category} (n : nwfs C) :
     ∏ f : arrow C, (nwfs_R_maps_class n) _ _ (arrow_mor (fact_R n f)).
 Proof.
   intro f.
 
-  (* unfold nwfs_R_maps_class, isAlgebra. *)
+  (** unfold nwfs_R_maps_class, isAlgebra. *)
   apply hinhpr.
   exists (nwfs_Π n f).
 
@@ -138,7 +138,7 @@ Proof.
     apply id_right.
   - exact (nwfs_Π_bottom_map_R_is_middle_map_of_Π _ _).
   - apply cancel_postcomposition.
-    (* rhs is just pr21 nwfs_Π n f
+    (** rhs is just pr21 nwfs_Π n f
       unfold three_mor22; simpl. *)
     apply pathsinv0.
     etrans. exact (nwfs_Π_bottom_map_id n f).
@@ -149,7 +149,7 @@ Qed.
 Lemma nwfs_llp_R_maps_cl_subs_L_maps_cl {C : category} (n : nwfs C) :
     llp ((nwfs_R_maps_class n)^cl) ⊆ ((nwfs_L_maps_class n)^cl).
 Proof.
-  (* Want to construct retract to L-map using lift.
+  (** Want to construct retract to L-map using lift.
      The L-map will be Lf *)
   intros a b f Hf.
 
@@ -157,15 +157,15 @@ Proof.
   set (Rf := arrow_mor (fact_R n f)).
   cbn in Rf.
 
-  (* f ∈ llp ((R-Map)^cl), so has llp with Rf *)
-  (* the lift gives us precisely the map we need for the retract *)
+  (** f ∈ llp ((R-Map)^cl), so has llp with Rf *)
+  (** the lift gives us precisely the map we need for the retract *)
   use (Hf _ _ Rf).
   - apply in_morcls_retc_if_in_morcls.
     exact (nwfs_Rf_is_R_map _ _).
   - exact Lf.
   - exact (identity _).
   - rewrite id_right.
-    (* or: three_comp (n (mor_to_arrow_ob f)) *)
+    (** or: three_comp (n (mor_to_arrow_ob f)) *)
     exact (LR_compatibility n f).
   - intro hl.
     destruct hl as [l [hl0 hl1]].
@@ -174,7 +174,7 @@ Proof.
     exists _, _, Lf.
     split.
     * exact (nwfs_Lf_is_L_map n f).
-    (*
+    (**
       A ===== A ===== A
       |       |       |
     f |       | λf    | f
@@ -200,7 +200,7 @@ Qed.
 Lemma nwfs_rlp_L_maps_cl_subs_R_maps_cl {C : category} (n : nwfs C) :
     rlp ((nwfs_L_maps_class n)^cl) ⊆ ((nwfs_R_maps_class n)^cl).
 Proof.
-  (* Want to construct R-map with retract from f using lift.
+  (** Want to construct R-map with retract from f using lift.
      The map will be Rf *)
   intros a b f hf.
 
@@ -208,8 +208,8 @@ Proof.
   set (Rf := arrow_mor (fact_R n f)).
   cbn in Lf, Rf.
 
-  (* f ∈ rlp (L-Map), so has rlp with Lf *)
-  (* the lift gives us precisely the map we need for the retract *)
+  (** f ∈ rlp (L-Map), so has rlp with Lf *)
+  (** the lift gives us precisely the map we need for the retract *)
   use (hf _ _ Lf).
 
   - apply in_morcls_retc_if_in_morcls.
@@ -218,7 +218,7 @@ Proof.
   - exact Rf.
   - rewrite id_left.
     apply pathsinv0.
-    (* or: three_comp (n (mor_to_arrow_ob f)) *)
+    (** or: three_comp (n (mor_to_arrow_ob f)) *)
     exact (LR_compatibility n f).
   - intro hl.
     destruct hl as [l [hl0 hl1]].
@@ -227,7 +227,7 @@ Proof.
     exists _, _, Rf.
     split.
     * exact (nwfs_Rf_is_R_map n f).
-    (*
+    (**
          λf       l
       A ---> Kf ----> A
       |       |       |

@@ -40,7 +40,7 @@ Proof.
     ).
   - intros f g γ.
     use tpair.
-    * (* arrow dom f ∐ cod f --> dom g ∐ cod g
+    * (** arrow dom f ∐ cod f --> dom g ∐ cod g
          simply given by γ: f --> g *)
       use BinCoproductOfArrows.
       + exact (arrow_mor00 γ).

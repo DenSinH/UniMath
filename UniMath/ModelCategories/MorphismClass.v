@@ -11,9 +11,9 @@ Local Open Scope morcls.
 
 Local Open Scope cat.
 
-(* See UniMath/MoreFoundations/Subtypes.v *)
+(** See UniMath/MoreFoundations/Subtypes.v *)
 
-(* A subset in Coq is like (A : hSet) : A -> Prop *)
+(** A subset in Coq is like (A : hSet) : A -> Prop *)
 Definition morphism_class (C : category) : UU :=
     ∏ (X Y : C), hsubtype (X --> Y).
 

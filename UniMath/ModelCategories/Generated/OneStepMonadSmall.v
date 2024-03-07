@@ -50,7 +50,7 @@ Context (CC : Colims C).
 Local Definition F1 := one_step_factorization J CC.
 Local Definition K := morcls_coprod_functor J CC.
 
-(* lifting problem to base colimit from other colimCocone by
+(** lifting problem to base colimit from other colimCocone by
    composing colimArrow *)
 Definition morcls_lp_colim_lp_to_morcls_base_colim_lp
     {d : chain (arrow C)}
@@ -66,7 +66,7 @@ Proof.
   exact (colimArrow clCC _ (colimCocone (arrow_colims CC _ d))).
 Defined.
 
-(* diagram of homsets *)
+(** diagram of homsets *)
 Definition homSet_diagram
     (f : arrow C)
     (d : chain (arrow C)) :=
@@ -84,14 +84,14 @@ Proof.
   - apply homset_property.
 Defined.
 
-(* set of lifting problems f --> colim (K d) *)
+(** set of lifting problems f --> colim (K d) *)
 Definition arrow_colimK_lp_hSet
     (f : arrow C)
     (d : chain (arrow C)) : hSet :=
   homSet f (colim (arrow_colims CC _ (mapdiagram K d))).
 
 
-(* induced isomorphism on
+(** induced isomorphism on
     lifting problems f --> cl
        ===>
     colim (homSet_diagram_colim)
@@ -113,7 +113,7 @@ Proof.
   exact ((_,, is_z_isomorphism_inv homset_iso) : z_iso _ _).
 Defined.
 
-(* lifting problem J --> cl as element in colim (homSet_diagram (pr1 S) d) *)
+(** lifting problem J --> cl as element in colim (homSet_diagram (pr1 S) d) *)
 Definition presentable_lp_homSet_colim_arrow
     {d : chain (arrow C)}
     {cl : arrow C}
@@ -129,7 +129,7 @@ Proof.
   exact (pr1 homset_iso (pr2 (morcls_lp_colim_lp_to_morcls_base_colim_lp isclCC S))).
 Defined.
 
-(* inclusion of arrow into CoproductArrow in the arrow category *)
+(** inclusion of arrow into CoproductArrow in the arrow category *)
 Definition morcls_lp_coprod_in
     {f : arrow C}
     (S : morcls_lp J f) :
@@ -143,14 +143,14 @@ Proof.
     ).
 Defined.
 
-(* HSET colimit base, i.e. pairs of (v : vertex nat_graph, S : f --> dob d v) *)
+(** HSET colimit base, i.e. pairs of (v : vertex nat_graph, S : f --> dob d v) *)
 Local Definition HSETcobase (f : arrow C) (d : chain (arrow C)) :=
     Colimits.cobase _ (homSet_diagram f d).
 
-(* given a lp (f, S) : morcls_lp J cl,
+(** given a lp (f, S) : morcls_lp J cl,
    a map from HSET colimit base (i.e. pairs of (v, f --> dob d v))
    to lifting problems f --> (colim (K d)) *)
-(* we will use this to define a map from the colimit *)
+(** we will use this to define a map from the colimit *)
 Definition presentable_lp_homSet_colim_colimK_fun
     (d : chain (arrow C))
     {cl : arrow C}
@@ -165,7 +165,7 @@ Proof.
   exact (colimIn (arrow_colims CC _ (mapdiagram K d)) v).
 Defined.
 
-(* helper relation on the function to show that it preserves
+(** helper relation on the function to show that it preserves
    the colimit equivalence relation on HSETcobase *)
 Local Definition presentable_lp_homSet_colim_colimK_fun_rel
     (d : chain (arrow C))
@@ -181,7 +181,7 @@ Proof.
   apply homset_property.
 Defined.
 
-(* we show it is an equivalence relation *)
+(** we show it is an equivalence relation *)
 Local Definition presentable_lp_homSet_colim_colimK_fun_eqrel
     (d : chain (arrow C))
     {cl : arrow C}
@@ -200,7 +200,7 @@ Proof.
   ).
 Defined.
 
-(* we show that our equivalence relation holds, whenever two
+(** we show that our equivalence relation holds, whenever two
    pairs (u,, f --> dob d u) and (v,, f --> dob d v)
    are related through the relation on HSETcobase,
    i.e. there is a morphism dob d u --> dob d v
@@ -256,7 +256,7 @@ Proof.
       apply id_left.
 Qed.
 
-(* This implies that our equivalence relation
+(** This implies that our equivalence relation
    holds whenever two pairs are related by the closure
    of the relations on HSETcobase *)
 Lemma presentable_lp_homSet_colim_colimK_fun_rel_impl
@@ -275,7 +275,7 @@ Proof.
   - trivial.
 Qed.
 
-(* This in turn implies that our function is compatible
+(** This in turn implies that our function is compatible
    with the equivalence relation on ColimHSET of HSETcobase *)
 Definition presentable_lp_homSet_colim_colimK_fun_iscomprel
     (d : chain (arrow C))
@@ -290,7 +290,7 @@ Proof.
   apply presentable_lp_homSet_colim_colimK_fun_rel_impl.
 Qed.
 
-(* This allows us to use the function to define an arrow
+(** This allows us to use the function to define an arrow
    f --> colim (K d)
   given any lifting problem f --> cl for cl a colimit on d *)
 Definition presentable_lp_colimK_mor
@@ -308,8 +308,8 @@ Proof.
   exact (setquotuniv _ _ f fcomprel homset_colim_arrow).
 Defined.
 
-(* ABSOLUTELY disgusting *)
-(* we want to show that the arrow f --> colim (K d) we get
+(** ABSOLUTELY disgusting *)
+(** we want to show that the arrow f --> colim (K d) we get
    for any lifting problem of the form Sv · coconeIn cc v
    is the same as the canonical projection of (v,, Sv)
    down to the set quotient. *)
@@ -366,7 +366,7 @@ Proof.
   reflexivity.
 Qed.
 
-(* we can use this to show that the following relation holds
+(** we can use this to show that the following relation holds
    for any such arrow *)
 Lemma presentable_lp_colimK_mor_coconeInCommutes
     {d : chain (arrow C)}
@@ -397,7 +397,7 @@ Proof.
   use arrow_mor_eq; reflexivity.
 Qed.
 
-(* predicate type to show relations on f --> cl given
+(** predicate type to show relations on f --> cl given
    that it holds for any (v,, Sv · colimIn cc v) *)
 Local Definition predicate_type
     (d : chain (arrow C))
@@ -405,8 +405,8 @@ Local Definition predicate_type
     (f : arrow C) :=
   (f --> cl) -> hProp.
 
-(* disgusting, but very useful *)
-(* we show that a predicate on a lifting problem f --> cl
+(** disgusting, but very useful *)
+(** we show that a predicate on a lifting problem f --> cl
    holds whenever it holds for any (Sv · colimIn cc v) for
    a pair (v,, Sv : f --> dob d v) *)
 Definition presentable_lp_colimK_mor_univ
@@ -470,7 +470,7 @@ Proof.
   exact (PS u Su).
 Qed.
 
-(* we use thsi to show the following relation *)
+(** we use thsi to show the following relation *)
 Lemma presentable_lp_colimK_mor_colimArrowCommutes
     {d : chain (arrow C)}
     {cl : arrow C}
@@ -518,7 +518,7 @@ Proof.
     apply id_left.
 Qed.
 
-(* The main proof of interest! *)
+(** The main proof of interest! *)
 Lemma K_small_if_J_small :
   class_presentable J
   -> preserves_colimits_of_shape K nat_graph.
@@ -602,7 +602,7 @@ Proof.
         exact (arrow_mor11_eq (presentable_lp_colimK_mor_colimArrowCommutes isclCC S (HJ _ (pr2 (morcls_lp_map S))))).
 Qed.
 
-(* no need for information about f here,
+(** no need for information about f here,
    this morphism is just the pushout square *)
 Definition K_L1_colim_mor (f : arrow C) :
    K f --> fact_L F1 f.
@@ -616,7 +616,7 @@ Proof.
    ).
 Defined.
 
-(* this is just the pushout square again *)
+(** this is just the pushout square again *)
 Definition colim_K_L1_mor_pointwise
   {g : graph}
   (d : diagram g (arrow C))
@@ -625,7 +625,7 @@ Definition colim_K_L1_mor_pointwise
     --> dob (mapdiagram (fact_L F1) d) v :=
   K_L1_colim_mor (dob d v).
 
-(* pushouts and coproducts commute *)
+(** pushouts and coproducts commute *)
 Lemma colim_K_L1_mor_commutes
     {g : graph} (d : diagram g (arrow C))
     {u v : vertex g} (e : edge u v) :
@@ -657,7 +657,7 @@ Proof.
     reflexivity.
 Qed.
 
-(* colim (K fi) --> colim (L1 fi) *)
+(** colim (K fi) --> colim (L1 fi) *)
 Definition colim_K_L1_mor
     {g : graph} (d : diagram g (arrow C)) :
   colim (arrow_colims CC g (mapdiagram K d))
@@ -671,7 +671,7 @@ Proof.
     ).
 Defined.
 
-(* colim (K fi) --> K (colim fi) *)
+(** colim (K fi) --> K (colim fi) *)
 Definition can_K_mor
     {g : graph} (d : diagram g (arrow C))
     {f : arrow C} {ccf : cocone d f}
@@ -686,14 +686,14 @@ Proof.
   exact (_,, K_mor).
 Defined.
 
-(* L1 (colim fi) --> colim fi *)
+(** L1 (colim fi) --> colim fi *)
 Definition L_colim_id_mor (f : arrow C) :
     fact_L F1 f --> f.
 Proof.
   exact (ε (lnwfs_L_monad (one_step_comonad J CC)) f).
 Defined.
 
-(* colim (L1 fi) --> colim fi *)
+(** colim (L1 fi) --> colim fi *)
 Definition colim_L_id_mor
     {g : graph} (d : diagram g (arrow C))
     {f : arrow C} {ccf : cocone d f}
@@ -730,7 +730,7 @@ Proof.
     ).
 Defined.
 
-(* we need to know that arrow_dom f is
+(** we need to know that arrow_dom f is
    a colimit for (L1 d)00, after all, all morphisms
    are identity. We need an isomorphism *)
 Definition dom_colim_dom_L1_cocone
@@ -767,7 +767,7 @@ Proof.
   ).
 Defined.
 
-(* the isomorphism dom f --> colim (L1 d)00 *)
+(** the isomorphism dom f --> colim (L1 d)00 *)
 Definition colim_dom_L1_dom_iso
     {g : graph} {d : diagram g (arrow C)}
     {f : arrow C} {ccf : cocone d f}
@@ -782,7 +782,7 @@ Proof.
   exact (z_iso_inv (_,, mor)).
 Defined.
 
-(* arrow_dom (L1 colim fi) --> arrow_dom (colim (L1 fi)) *)
+(** arrow_dom (L1 colim fi) --> arrow_dom (colim (L1 fi)) *)
 Definition L1_colim_L1_map00
     {g : graph} {d : diagram g (arrow C)}
     {f : arrow C} {ccf : cocone d f}
@@ -794,8 +794,8 @@ Proof.
   exact (colim_dom_L1_dom_iso isclCC).
 Defined.
 
-(* K (colim fi) --> colim (L1 fi) *)
-(* arrow_mor11 is the bottom pushout map *)
+(** K (colim fi) --> colim (L1 fi) *)
+(** arrow_mor11 is the bottom pushout map *)
 Definition Kcolim_colimL1_mor
     {g : graph} {d : diagram g (arrow C)}
     {f : arrow C} {ccf : cocone d f}
@@ -808,7 +808,7 @@ Proof.
   exact (colim_K_L1_mor d).
 Defined.
 
-(* top pushout map *)
+(** top pushout map *)
 Definition L1_colim_L1_map_pushoutOut2
     {g : graph} {d : diagram g (arrow C)}
     {f : arrow C} {ccf : cocone d f}
@@ -820,7 +820,7 @@ Proof.
   exact (colim (arrow_colims CC g (mapdiagram (fact_L F1) d))).
 Defined.
 
-(* we show that arrow_dom (K f) is a colimCocone,
+(** we show that arrow_dom (K f) is a colimCocone,
    given that (K f) is a colim for the mapped diagram,
    i.e. we project the ColimCocone to the 0 ob/arr *)
 Definition L1_colim_L1_map_dom_Kf_is_colimCocone
@@ -834,7 +834,7 @@ Definition L1_colim_L1_map_dom_Kf_is_colimCocone
   isColimCocone _ _ HKCC00 :=
     project_colimcocone00 CC isHKCC.
 
-(* we show that arrow_cod (K f) is a colimCocone,
+(** we show that arrow_cod (K f) is a colimCocone,
    given that (K f) is a colim for the mapped diagram,
    i.e. we project the ColimCocone to the 1 ob/arr *)
 Definition L1_colim_L1_map_cod_Kf_is_colimCocone
@@ -848,7 +848,7 @@ Definition L1_colim_L1_map_cod_Kf_is_colimCocone
   isColimCocone _ _ HKCC11 :=
     project_colimcocone11 CC isHKCC.
 
-(* we show that the canonical iso from
+(** we show that the canonical iso from
    K (colim fi) --> colim (K fi)
    projects to the one on the domains *)
 Local Lemma colim_iso_inv_projects
@@ -965,7 +965,7 @@ Proof.
   exact (arrow_mor_comm (Kcolim_colimL1_mor HK isclCC)).
 Qed.
 
-(* the map L1 (colim fi) --> colim (L1 fi)
+(** the map L1 (colim fi) --> colim (L1 fi)
    that we need, defined with the pushout *)
 Definition L1_colim_L1_map
     {g : graph} {d : diagram g (arrow C)}
@@ -988,7 +988,7 @@ Proof.
     ).
 Defined.
 
-(* the canonical arrow from f --> (colim CC d)
+(** the canonical arrow from f --> (colim CC d)
    (where the colimit is not necessarily f)
    projects down to the colimArrow on the domains  *)
 Local Lemma colimArrow_projects
@@ -1156,7 +1156,7 @@ Proof.
         reflexivity.
 Qed.
 
-(* Main result *)
+(** Main result *)
 Lemma L1_preserves_colim_if_K_preserves_colim
     {g : graph} {d : diagram g (arrow C)}
     {f : arrow C} (ccf : cocone d f) :
@@ -1173,7 +1173,7 @@ Proof.
   exact (L1_colim_L1_map_is_inverse_in_precat HK isclCC).
 Defined.
 
-(* applying the main result *)
+(** applying the main result *)
 Lemma L1_small_if_K_small :
   preserves_colimits_of_shape K nat_graph
   -> preserves_colimits_of_shape (fact_L F1) nat_graph.

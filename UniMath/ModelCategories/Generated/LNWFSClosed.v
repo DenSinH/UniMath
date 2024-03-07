@@ -89,7 +89,7 @@ Section Helpers.
 
 Context (d : diagram g Ff_mon).
 
-(* define morphism into colimit pointwise on the middle objects *)
+(** define morphism into colimit pointwise on the middle objects *)
 Lemma Ff_right_tensor_preserves_colimit_mor11
     (f : arrow C) :
   three_ob1 (fact_functor (monoidal_right_tensor A (colim (FfCC d))) f) -->
@@ -204,7 +204,7 @@ Qed.
 
 Opaque ColimFfCocone.
 
-(* Ff_right_closed: *)
+(** Ff_right_closed: *)
 Lemma Ff_right_tensor_preserves_colimit_mor_iso :
   z_iso
     ((monoidal_right_tensor A) (colim (FfCC d)))
@@ -215,7 +215,7 @@ Proof.
   exact (Ff_right_tensor_preserves_colimit_mor_are_inverses).
 Defined.
 
-(* the following lemma can be used to get a ColimCocone of
+(** the following lemma can be used to get a ColimCocone of
    mapdiagram (monoidal_right_tensor A) d
    to monoidal_right_tensor A (colim (FfCC d)),
    so that we can lift the isomorphism to one in LNWFS,

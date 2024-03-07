@@ -13,14 +13,14 @@ Section Retract.
 
 Context {C : category}.
 
-(* structure retract {a b a' b' : C} (f : a ⟶ b) (f' : a' ⟶ b') : Type v :=
+(** structure retract {a b a' b' : C} (f : a ⟶ b) (f' : a' ⟶ b') : Type v :=
 (ix : a' ⟶ a) (ra : a ⟶ a')
 (iy : b' ⟶ b) (ry : b ⟶ b')
 (hx : ix ≫ ra = 𝟙 a')
 (hy : iy ≫ ry = 𝟙 b')
 (hi : ix ≫ f = f' ≫ iy)
 (hr : ra ≫ f' = f ≫ ry) *)
-(*
+(**
         f
     a ----> b
   ^ ^       ^ ^
@@ -29,7 +29,7 @@ Context {C : category}.
     a'----> b'
         f'
 *)
-(* https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L15 *)
+(** https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L15 *)
 Definition is_retract {x y x' y' : C} (f : x --> y) (f' : x' --> y')
     (ix : x' --> x) (rx : x --> x') (iy : y' --> y) (ry : y --> y') : UU :=
   (ix · rx = identity x') × (iy · ry = identity y')
@@ -51,21 +51,21 @@ Definition make_retract {x y x' y' : C} {f : x --> y} {f' : x' --> y'}
   retract f f' :=
     tpair _ ix (tpair _ rx (tpair _ iy (tpair _ ry r))).
 
-(* https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L23 *)
-(* Lemma 14.1.2 in MCAT *)
+(** https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L23 *)
+(** Lemma 14.1.2 in MCAT *)
 Lemma retract_is_iso {x y x' y' : C} {f : iso x y} {f' : x' --> y'}
     (r : retract f f') :
   is_iso f'.
 Proof.
   destruct r as [ix [rx [iy [ry [hx [hy [hi hr]]]]]]].
 
-  (* we construct an explicit inverse from the retract dixgram *)
+  (** we construct an explicit inverse from the retract dixgram *)
   apply is_iso_from_is_z_iso.
 
-  (* inverse is ra ∘ f^{-1} ∘ iy *)
+  (** inverse is ra ∘ f^{-1} ∘ iy *)
   exists (iy · (inv_from_iso f) · rx).
   split.
-  (* dixgram chasing *)
+  (** dixgram chasing *)
   - rewrite assoc, assoc, <- hi.
     rewrite <- (assoc ix _ _).
     rewrite iso_inv_after_iso, id_right.
@@ -78,7 +78,7 @@ Defined.
 
 End Retract.
 
-(* https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L36 *)
+(** https://github.com/rwbarton/lean-model-categories/blob/e366fccd9aac01154da9dd950ccf49524f1220d1/src/category_theory/retract.lean#L36 *)
 Lemma functor_on_retract {C D : category}
     (F : functor C D)
     {x y x' y' : C} {f : x --> y} {f' : x' --> y'}

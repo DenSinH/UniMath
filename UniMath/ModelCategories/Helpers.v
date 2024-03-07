@@ -8,7 +8,7 @@ Require Import UniMath.CategoryTheory.DisplayedCats.Examples.Three.
 
 Local Open Scope cat.
 
-(* useful lemma in a lot of proofs where we transport
+(** useful lemma in a lot of proofs where we transport
    arrows / three morphisms *)
 Lemma pr1_transportf_const {A : UU} {B : UU} {P : ∏ (a : A), B -> UU}
     {a a' : A} (e : a = a') (xs : ∑ b : B, P a b) :
@@ -19,7 +19,7 @@ Proof.
   reflexivity.
 Qed.
 
-(* helper for showing section_disp_axioms *)
+(** helper for showing section_disp_axioms *)
 Lemma section_disp_on_eq_morphisms {C : category}
     (F : section_disp (three_disp C))
     {f f' : arrow C} {γ γ': f --> f'}
@@ -76,13 +76,13 @@ Proof.
   now induction H.
 Qed.
 
-(* double pathscomp0 for rewriting equalities on either side *)
+(** double pathscomp0 for rewriting equalities on either side *)
 Definition pathscomp1 {X : UU} {a b x y : X} (e1 : a = b) (e2 : a = x) (e3 : b = y) : x = y.
 Proof.
   induction e1. induction e2. apply e3.
 Qed.
 
-(* composition of morphisms equality *)
+(** composition of morphisms equality *)
 Lemma compeq {C : category} {x y z : C}
     {f f' : x --> y} {g g' : y --> z} :
   f = f' -> g = g' -> f · g = f' · g'.

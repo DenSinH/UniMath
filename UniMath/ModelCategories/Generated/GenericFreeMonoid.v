@@ -94,7 +94,7 @@ Proof.
     etrans. apply maponpaths_2.
             use (bifunctor_leftcomp V).
     apply assoc'.
-(* Qed because morphisms are propositional anyway *)
+(** Qed because morphisms are propositional anyway *)
 Qed.
 
 Definition Mon_alg_disp_data (T : pointed) :
@@ -201,7 +201,7 @@ Definition Mon_alg_right_action {T : pointed} (X : Mon_alg T) :
     functor C (Mon_alg T) :=
   (_,, Mon_alg_right_action_axioms X).
 
-(* basically want to formalize Garner / Kelly (generalized) stuff about
+(** basically want to formalize Garner / Kelly (generalized) stuff about
    T-Alg (/ T-Mod in Garner)
    and how one obtains a monoid from the free T-algebra
    Mon should be a monoidal category (Ff_C) is at least
@@ -215,7 +215,7 @@ Definition Mon_alg_forgetful_functor (T : pointed) :
 Definition alg_forgetful_functor_right_action_is_adjoint {T : pointed} (X : Mon_alg T) : UU :=
     are_adjoints (Mon_alg_right_action X) (Mon_alg_forgetful_functor T).
 
-(* not every object can be pointed in a general monoidal category *)
+(** not every object can be pointed in a general monoidal category *)
 Definition alg_forgetful_functor_right_action_is_adjoint_induced_mul {T : pointed} (X : Mon_alg T)
     (Adj : alg_forgetful_functor_right_action_is_adjoint X) :
   (pr1 X) ⊗_{V} (pr1 X) --> (pr1 X).

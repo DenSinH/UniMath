@@ -43,7 +43,7 @@ Arguments CoproductIn {_} {_} {_} _.
 Arguments CoproductInCommutes {_} {_} {_} _ {_}.
 
 
-(* We have to do this special stuff, because we come across
+(** We have to do this special stuff, because we come across
    a lot of equalities between coproduct inclusions, where
    the indexed objects are not the same (map, lifting problem map --> f)
    only because the lifting problems are not the same, the maps are
@@ -70,7 +70,7 @@ Proof.
   reflexivity.
 Qed.
 
-(* specialize domain / codomain cases *)
+(** specialize domain / codomain cases *)
 Lemma CoproductInLiftingProblemsEqDom
     {C : category} {J : morphism_class C} {f : arrow C}
     {CCa : Coproduct _ _ (λ lp, arrow_dom (pr1 (morcls_lp_map lp)))}
@@ -89,7 +89,7 @@ Proof.
   apply (CoproductInLiftingProblemsEq (a := λ f, arrow_cod (pr1 f))).
 Qed.
 
-(* first try basic apply / use, the more expensive match statement *)
+(** first try basic apply / use, the more expensive match statement *)
 Ltac morcls_lp_coproduct_in_eq :=
   apply (CoproductInLiftingProblemsEqCod) ||
   apply (CoproductInLiftingProblemsEqDom) ||
@@ -108,34 +108,34 @@ Section one_step_monad.
 Context {C : category} (J : morphism_class C).
 Context (CC : Colims C).
 
-(* Garner 2008, section 5.2 (functor K) *)
+(** Garner 2008, section 5.2 (functor K) *)
 Definition morcls_coprod_functor_data : functor_data (arrow C) (arrow C).
 Proof.
   use make_functor_data.
-  - (* sending f to ∑_{x ∈ S_f} g_x*)
+  - (** sending f to ∑_{x ∈ S_f} g_x*)
     intro f.
     exact (morcls_lp_coprod CC J f).
-  - (* map γ: f --> f' gives map of lifting problems *)
+  - (** map γ: f --> f' gives map of lifting problems *)
     intros f f' γ.
     use mors_to_arrow_mor.
     * use CoproductOfArrowsInclusion.
-      + (* inclusion of lifting problems S_f into S_f' with γ *)
+      + (** inclusion of lifting problems S_f into S_f' with γ *)
         intro lpJf.
         destruct lpJf as [g S].
         exists g.
         exact (S · γ).
-      + (* map from lifting problem of S_f's left hand domain into that of S_f'
+      + (** map from lifting problem of S_f's left hand domain into that of S_f'
            The lifting problems have the same domain on the left, as f is the
            same. *)
         intro. exact (identity _).
     * use CoproductOfArrowsInclusion.
-      + (* the same map here *)
+      + (** the same map here *)
         intro lpJf.
         destruct lpJf as [g S].
         exists g.
         exact (S · γ).
       + intro. exact (identity _).
-    * (* commutativity of coproduct arrow inclusion with
+    * (** commutativity of coproduct arrow inclusion with
          ∑_{x∈S_f} g_x and ∑_{x∈S_f'} g_x *)
       abstract (
         (* simpl; *)
@@ -145,7 +145,7 @@ Proof.
         apply pathsinv0;
         etrans; [use CoproductOfArrowsInclusion_comp|];
         (* simpl; *)
-        (* equality of coproduct of arrows *)
+        (** equality of coproduct of arrows *)
         apply maponpaths;
         apply funextsec;
         intro;
@@ -214,7 +214,7 @@ Proof.
       apply assoc.
 Qed.
 
-(* K in Garner *)
+(** K in Garner *)
 Definition morcls_coprod_functor : functor (arrow C) (arrow C) :=
     (_,, morcls_coprod_functor_is_functor).
 
@@ -248,7 +248,7 @@ Proof.
     apply id_left.
 Qed.
 
-(* φ in Garner 2007, p23 *)
+(** φ in Garner 2007, p23 *)
 Definition morcls_coprod_nat_trans :
     nat_trans morcls_coprod_functor (functor_identity _) :=
   (_,, morcls_coprod_nat_trans_is_nat_trans).
@@ -265,7 +265,7 @@ Lemma commuting_cube_construction {f f' : arrow C}
                 aa · arrow_mor00 (morcls_lp_coprod_diagram CC J f')) :
   E1 CC J f --> E1 CC J f'.
 Proof.
-  (* The map induced by pushouts on the front and back face
+  (** The map induced by pushouts on the front and back face
      (only the front face is drawn)
           ∑h
       ∑A ------> C
@@ -286,16 +286,16 @@ Proof.
        _ BE1f' CE1f').
 
   abstract (
-    (* Left to show commutativity of (outer) pushout diagram *)
-    (* Kg · (arrow_mor11 Kγ) · (PushoutIn1 f') = (PushoutIn f) · γ00 · λ1f *)
+    (** Left to show commutativity of (outer) pushout diagram *)
+    (** Kg · (arrow_mor11 Kγ) · (PushoutIn1 f') = (PushoutIn f) · γ00 · λ1f *)
     (* unfold CE1f', BE1f'; *)
     etrans; [apply assoc|];
 
-    (* first rewrite commutativity of left face *)
+    (** first rewrite commutativity of left face *)
     etrans; [apply cancel_postcomposition; exact leftface|];
     etrans; [apply assoc'|];
 
-    (* rewrite commutativity in top face *)
+    (** rewrite commutativity in top face *)
     apply pathsinv0;
     etrans; [apply assoc|];
     etrans; [apply cancel_postcomposition; exact topface|];
@@ -304,7 +304,7 @@ Proof.
     etrans; [apply assoc'|];
     apply cancel_precomposition;
 
-    (* all that's left is commutativity in the pushout square of f' *)
+    (** all that's left is commutativity in the pushout square of f' *)
     apply pathsinv0;
     exact (PushoutSqrCommutes (morcls_lp_coprod_diagram_pushout CC J f'))
   ).
@@ -373,14 +373,14 @@ Proof.
     exact Hc.
 Qed.
 
-(* one step comonad functor L1 sends f to λ1f *)
+(** one step comonad functor L1 sends f to λ1f *)
 Definition one_step_comonad_functor_data : functor_data (arrow C) (arrow C).
 Proof.
   use make_functor_data.
   - intro f.
     exact (λ1 CC J f).
   - intros f f' γ.
-    (* The map on morphisms becomes the right face from the cube induced by
+    (** The map on morphisms becomes the right face from the cube induced by
           ∑h
       ∑A ------> C
        |\          \  γ00
@@ -392,7 +392,7 @@ Proof.
           \ v∑f'       v
            ∑B' - - - > E1f'
     *)
-    (* the morphism E1f --> E1f' we will need arises from the pushout
+    (** the morphism E1f --> E1f' we will need arises from the pushout
          property with the following maps. *)
     set (Kγ := (#morcls_coprod_functor)%cat γ).
     set (φγ := nat_trans_ax morcls_coprod_nat_trans f f' γ).
@@ -406,9 +406,9 @@ Proof.
       + exact (arrow_mor00 γ).
       + abstract (exact (pathsinv0 (arrow_mor_comm Kγ))).
       + abstract (exact (pathsinv0 φγ00)).
-    * (* commutativity of right face *)
-      (* γ00 · λ1f' = λ1f · ccc *)
-      (* This follows simply from the properties of a pushout *)
+    * (** commutativity of right face *)
+      (** γ00 · λ1f' = λ1f · ccc *)
+      (** This follows simply from the properties of a pushout *)
       abstract (
         apply commuting_cube_right_face
       ).
@@ -419,9 +419,9 @@ Proof.
   split.
   - intro f.
     use arrow_mor_eq.
-    * (* top map is identity simply because it comes from a functor *)
+    * (** top map is identity simply because it comes from a functor *)
       reflexivity.
-    * (* bottom map is identity because the pushout arrow is unique *)
+    * (** bottom map is identity because the pushout arrow is unique *)
       apply pathsinv0, PushoutArrowUnique.
       + etrans. apply id_right.
         apply pathsinv0.
@@ -436,7 +436,7 @@ Proof.
     use arrow_mor_eq.
     * reflexivity.
     * apply pathsinv0, PushoutArrowUnique.
-      (* Gotta keep in mind that (# one_step_comonad_functor_data) S
+      (** Gotta keep in mind that (# one_step_comonad_functor_data) S
          is a PushoutArrow and we can then use pushout properties. *)
       + apply pathsinv0.
         etrans. apply cancel_postcomposition.
@@ -521,9 +521,9 @@ Proof.
     exists (arrow_mor11 L1γ).
     abstract (
       split; apply pathsinv0; [
-        (* commutativity of λ1 and arrow_mor11 (#L1 γ) *)
+        (** commutativity of λ1 and arrow_mor11 (#L1 γ) *)
         exact (arrow_mor_comm L1γ)
-      | (* commutativity of ρ1 and arrow_mor11 (#L1 γ) = arrow_mor00 (#R1 γ) *)
+      | (** commutativity of ρ1 and arrow_mor11 (#L1 γ) = arrow_mor00 (#R1 γ) *)
         apply one_step_comonad_ρ1_compat
       ]
     ).
@@ -531,20 +531,20 @@ Defined.
 
 Definition one_step_factorization_axioms : section_disp_axioms one_step_factorization_data.
 Proof.
-  (* these identities follow from the functorality of f -> λ1f (one_step_comonad_functor)
+  (** these identities follow from the functorality of f -> λ1f (one_step_comonad_functor)
   *)
 
   split.
   - intro f.
     apply subtypePath; [intro; apply isapropdirprod; apply homset_property|].
     (* cbn. *)
-    (* behavior of commuting cube construction on identity follows from
+    (** behavior of commuting cube construction on identity follows from
        identity axiom of the one_step_comonad_functor *)
     set (one_step_comonad_id := functor_id (one_step_comonad_functor) f).
     set (bottom := arrow_mor11_eq one_step_comonad_id).
     exact bottom.
   - intros g1 g2 g3 γ12 γ23.
-    (* behavior of commuting cube construction on composition follows from
+    (** behavior of commuting cube construction on composition follows from
       identity axiom of the one_step_comonad_functor *)
     apply subtypePath; [intro; apply isapropdirprod; apply homset_property|].
     set (one_step_comonad_comp := functor_comp (one_step_comonad_functor) γ12 γ23).
@@ -588,7 +588,7 @@ Proof.
   split.
   - intro f.
     use arrow_mor_eq.
-    * (* bottom map is identity because the pushout arrow is unique *)
+    * (** bottom map is identity because the pushout arrow is unique *)
       apply pathsinv0, PushoutArrowUnique.
       + etrans. apply id_right.
         apply pathsinv0.
@@ -599,7 +599,7 @@ Proof.
       + etrans. apply id_right.
         apply pathsinv0.
         apply id_left.
-    * (* bottom map is identity simply because it comes from a functor *)
+    * (** bottom map is identity simply because it comes from a functor *)
       reflexivity.
   - intros g f h S T.
     apply subtypePath; [intro; apply homset_property|].
@@ -615,7 +615,7 @@ Definition one_step_monad_functor : functor (arrow C) (arrow C) :=
 
 Definition one_step_comonad_counit_data : nat_trans_data (one_step_comonad_functor) (functor_identity _).
 Proof.
-  (* Send λ1 f --> f along
+  (** Send λ1 f --> f along
       C ====== C
       |        |
   λ1f |   L1   | f
@@ -639,7 +639,7 @@ Proof.
     apply id_left.
   - (* PushoutArrow (morcls_lp_coprod_diagram_pushout f (CC f) POs) ...
        · ρ1f' = ρ1f · γ11 *)
-    (* We are trying to prove an equality of maps E1f --> arrow_cod f' *)
+    (** We are trying to prove an equality of maps E1f --> arrow_cod f' *)
     use (MorphismsOutofPushoutEqual
           (isPushout_Pushout (morcls_lp_coprod_diagram_pushout CC J f))).
     * (* todo: this is a really common strategy, generalize this? *)
@@ -654,10 +654,10 @@ Proof.
       etrans. apply cancel_postcomposition.
               use PushoutArrow_PushoutIn1.
 
-      (* simplify left hand side *)
+      (** simplify left hand side *)
       (* etrans. { simpl. reflexivity. } *)
-      (* k_x · γ11 = arrow_mor11 (Kγ) · k_x' *)
-      (* this is just the commutativity of the bottom square of the
+      (** k_x · γ11 = arrow_mor11 (Kγ) · k_x' *)
+      (** this is just the commutativity of the bottom square of the
          commutative cube of φ *)
       set (φax := nat_trans_ax morcls_coprod_nat_trans f f' γ).
       set (bottom_square := arrow_mor11_eq φax).
@@ -684,7 +684,7 @@ Definition one_step_comonad_counit : nat_trans (one_step_comonad_functor) (funct
 
 Definition one_step_monad_unit_data : nat_trans_data (functor_identity _) (one_step_monad_functor).
 Proof.
-  (* Send f --> ρ1 f along
+  (** Send f --> ρ1 f along
          λ1f
       C ----> E1f
       |        |
@@ -713,11 +713,11 @@ Qed.
 Definition one_step_monad_unit : nat_trans (functor_identity _) (one_step_monad_functor) :=
     (_,, one_step_monad_unit_is_nat_trans).
 
-(* ψf in Garner *)
+(** ψf in Garner *)
 Definition morcls_lp_coprod_L1_inclusion (f : arrow C) :
     morcls_lp J f -> morcls_lp J (λ1 CC J f).
 Proof.
-  (* The inclusion of lifting problems is induced by
+  (** The inclusion of lifting problems is induced by
     S_f → S_{L1f} : x ↦ (g_x -- in_x -> Kf = ∑f -- ϵf -> L1f)
     where ϵf is morcls_lp_coprod_diagram_red:
               ∑h
@@ -729,7 +729,7 @@ Proof.
     *)
   intro S.
   exists (pr1 S).
-  (* right hand square *)
+  (** right hand square *)
   transparent assert (rhs_mor : (morcls_lp_coprod CC J f --> λ1 CC J f)).
   {
     use mors_to_arrow_mor.
@@ -742,7 +742,7 @@ Proof.
   }
   apply (postcompose rhs_mor).
 
-  (* left hand square *)
+  (** left hand square *)
   (* todo: generalize this *)
   use mors_to_arrow_mor.
   - exact (CoproductIn (morcls_lp_dom_coprod CC J f) S).
@@ -750,17 +750,17 @@ Proof.
   - abstract (exact (CoproductInCommutes _ _ S)).
 Defined.
 
-(* δf in Garner *)
+(** δf in Garner *)
 Definition morcls_lp_coprod_L1_map (f : arrow C) :
     (morcls_lp_coprod CC J f) --> (morcls_lp_coprod CC J (λ1 CC J f)).
 Proof.
-  (* the inclusion of the objects are just identity on themselves *)
+  (** the inclusion of the objects are just identity on themselves *)
   use mors_to_arrow_mor;
     try exact (CoproductOfArrowsInclusion
               (morcls_lp_coprod_L1_inclusion f) _ _
               (λ _, (identity _))).
 
-  (* commutativity *)
+  (** commutativity *)
   abstract (
     etrans; [use precompWithCoproductArrowInclusion|];
     (* simpl; *)
@@ -786,7 +786,7 @@ Definition one_step_comonad_mul_data :
       (functor_composite (fact_L one_step_factorization) (fact_L one_step_factorization)).
 Proof.
   intro f.
-  (* The map on morphisms becomes the right face from the cube induced by
+  (** The map on morphisms becomes the right face from the cube induced by
           ∑h
       ∑A ------> C
        |\          =
@@ -803,12 +803,12 @@ Proof.
   use mors_to_arrow_mor.
   - exact (identity _).
   - use commuting_cube_construction.
-    * (* aa *) exact (arrow_mor00 δf).
-    * (* bb *) exact (arrow_mor11 δf).
-    * (* cc *) exact (identity _).
-    * (* left face *)
+    * (** aa *) exact (arrow_mor00 δf).
+    * (** bb *) exact (arrow_mor11 δf).
+    * (** cc *) exact (identity _).
+    * (** left face *)
       exact (pathsinv0 (arrow_mor_comm δf)).
-    * (* top face *)
+    * (** top face *)
       abstract (
         etrans; [apply id_right|];
         apply pathsinv0;
@@ -820,7 +820,7 @@ Proof.
         etrans; [apply id_left|];
         exact (CoproductInCommutes _ _ S)
       ).
-  - (* commutativity in right face *)
+  - (** commutativity in right face *)
     abstract (
       use commuting_cube_right_face
     ).
@@ -834,7 +834,7 @@ Proof.
     etrans. apply id_right.
     apply pathsinv0.
     apply id_left.
-  - (* equality of arrows E1 f --> E1 (λ1f) *)
+  - (** equality of arrows E1 f --> E1 (λ1f) *)
     use (MorphismsOutofPushoutEqual
       (isPushout_Pushout (morcls_lp_coprod_diagram_pushout CC J f))).
     *

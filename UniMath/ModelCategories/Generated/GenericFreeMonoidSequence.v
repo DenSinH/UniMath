@@ -1,4 +1,4 @@
-(* Can be found on nlab:
+(** Can be found on nlab:
     https://ncatlab.org/nlab/show/transfinite+construction+of+free+algebras
 Or in G. M. Kelly. A unified treatment of transfinite constructions for free algebras, free
 monoids, colimits, associated sheaves
@@ -33,7 +33,7 @@ Section free_monoid_colim.
 Import BifunctorNotations.
 Import MonoidalNotations.
 
-(* We will end up requiring that C is cocomplete anyway *)
+(** We will end up requiring that C is cocomplete anyway *)
 Context {C : category}.
 Context (V : monoidal C).
 Local Definition CMon : monoidal_cat := (_,, V).
@@ -42,7 +42,7 @@ Context (T : pointed V).
 Context (CL : Chains C).
 Context (CE : Coequalizers C).
 
-(* the horizontal map can be constructed from the vertical map:
+(** the horizontal map can be constructed from the vertical map:
               TXβ
                 |
                 | xβ
@@ -92,7 +92,7 @@ Definition next_pair_diagram_coeq (xβ : pair_diagram) :=
 
 Definition next_pair_diagram (xβ : pair_diagram) : pair_diagram.
 Proof.
-  (* Part of the sequence that we are considering:
+  (** Part of the sequence that we are considering:
     TXβ-1 --> TXβ ----> TXβ1
       |        |         |
       |     xβ |         | xβ1
@@ -100,7 +100,7 @@ Proof.
       Xβ ----> Xβ1 ----> Xβ2
           fβ
   *)
-  (* the next "left object" is Xβ1 *)
+  (** the next "left object" is Xβ1 *)
   exists (pair_diagram_rob xβ).
 
   set (coeq := next_pair_diagram_coeq xβ).
@@ -118,7 +118,7 @@ Proof.
   induction n as [|β xβ].
   - exists A, (T ⊗_{V} A).
     exact (identity _).
-    (* initial arrow is I ⟹ T *)
+    (** initial arrow is I ⟹ T *)
   - exact (next_pair_diagram xβ).
 Defined.
 
@@ -164,7 +164,7 @@ Proof.
   - intro n. exact (dob c (S n)).
   - intros m n e.
     use (dmor c).
-    (* do NOT abstract this, otherwise the recursion will not
+    (** do NOT abstract this, otherwise the recursion will not
        resolve. *)
     now rewrite <- e.
 Defined.
@@ -1124,7 +1124,7 @@ Proof.
   apply id_left.
 Qed.
 
-(* We define the map from free_monoid_coeq_sequence_rightwhisker_colim_on,
+(** We define the map from free_monoid_coeq_sequence_rightwhisker_colim_on,
    i.e. from the chain on I_{V} rightwhiskered with T∞.
    It is possible, and in fact cleaner, to define a map
    colim (chain_on T∞) --> T∞,
@@ -1399,7 +1399,7 @@ Lemma Tinf_monoid_unit_right_pointwise (v : vertex nat_graph) :
     · free_monoid_coeq_sequence_diagram_on_Tinf_Tinf_map v) =
   colimIn free_monoid_coeq_sequence_colim_unit v.
 Proof.
-  (* Need to show that
+  (** Need to show that
                                    mon_map
     Xα+ --> Xα+ ⊗ I --> Xα+ ⊗ T∞ -------> T∞
                       =
@@ -1723,7 +1723,7 @@ Lemma rt_chain_iso_pair_ind_inv_iscoeqout
 Proof.
   set (totrel := rt_chain_iso_pair_rel_impl_total_rel (rtisp_rel Cisp)).
 
-  (* inverse of total relation *)
+  (** inverse of total relation *)
   assert (totrel' :
       pair_diagram_horizontal_arrow (free_monoid_coeq_sequence_on A v)
       · inv_from_z_iso (rtisp_riso Cisp)
@@ -1966,7 +1966,7 @@ Proof.
   exact (rtisp_rel (rt_chain_iso_pairs A v)).
 Qed.
 
-(* no longer need exact definition of chain iso pairs *)
+(** no longer need exact definition of chain iso pairs *)
 Opaque rt_chain_iso_pairs.
 
 Lemma rt_chain_colim_iso (A : C) :
@@ -2035,7 +2035,7 @@ Proof.
                   apply (monoidal_associatorisolaw V).
           apply id_left.
 
-  (* reduced back down to first step *)
+  (** reduced back down to first step *)
   set (ccTinf := free_monoid_coeq_sequence_colim_on I_{V}).
   set (rt_ccTinf := rt_chain Tinf _ _ _ (isColimCocone_from_ColimCocone ccTinf)).
   set (rt_colim := free_monoid_coeq_sequence_rightwhisker_colim_on Tinf I_{V}).

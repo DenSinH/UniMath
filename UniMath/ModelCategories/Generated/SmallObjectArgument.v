@@ -1,4 +1,4 @@
-(*
+(**
 The Algebraic Small Object Argument
 
 The Algebraic Small Object Argument by Richard Garner

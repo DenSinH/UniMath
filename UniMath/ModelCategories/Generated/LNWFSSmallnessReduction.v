@@ -1,4 +1,4 @@
-(* Reducing the smallness requirement on LNWFS to a simpler one
+(** Reducing the smallness requirement on LNWFS to a simpler one
 to be applied to the one step comonad *)
 
 Require Import UniMath.MoreFoundations.All.
@@ -57,7 +57,7 @@ Local Definition LNWFS_mon : monoidal_cat :=
 Import BifunctorNotations.
 Import MonoidalNotations.
 
-(* lift edge of diagram to morphism between coconeIns *)
+(** lift edge of diagram to morphism between coconeIns *)
 Definition cocone_coconeIn_edge_lifted
     {d : chain C} {y : C}
     (ccy : cocone d y)
@@ -75,7 +75,7 @@ Proof.
     ).
 Defined.
 
-(* define a chain of middle objects from a cocone, i.e.
+(** define a chain of middle objects from a cocone, i.e.
   X0 --> X1 --> X2 --> X3 ...
     \    |f1  f2|     /
    f0 \  |      |   / f3
@@ -101,7 +101,7 @@ Proof.
     exact (arrow_mor00 (#(fact_R F) elifted)).
 Defined.
 
-(* define the factorization of a cocone *)
+(** define the factorization of a cocone *)
 Definition fact_cocone
     (F : Ff C)
     {d : chain C} {y : C}
@@ -119,7 +119,7 @@ Proof.
     ).
 Defined.
 
-(* define coconeIn to colimArrow morphism for cocone, i.e.
+(** define coconeIn to colimArrow morphism for cocone, i.e.
     Xv ----> X∞
     |        |
     |        |
@@ -142,7 +142,7 @@ Proof.
     ).
 Defined.
 
-(* define the cocone of right objects with vertex R(colimArrow)
+(** define the cocone of right objects with vertex R(colimArrow)
    we will require that this is a colimCocone for the sliced
    R functors to be small *)
 Definition dom_fact_R_colimArrow_cocone
@@ -165,12 +165,12 @@ Proof.
     ).
 Defined.
 
-(* define smallness of (sliced) R functor *)
+(** define smallness of (sliced) R functor *)
 Definition FR_slice_omega_small (F : Ff C) : UU :=
     ∏ (d : chain C) (y : C) (ccy : cocone d y),
       isColimCocone _ _ (dom_fact_R_colimArrow_cocone F ccy).
 
-(* a chain in arrow C from a cocone in C *)
+(** a chain in arrow C from a cocone in C *)
 Definition cocone_arrow_chain
     {d : chain C} {y : C}
     (ccy : cocone d y) : chain (arrow C).
@@ -182,7 +182,7 @@ Proof.
     exact (cocone_coconeIn_edge_lifted ccy e).
 Defined.
 
-(* we need that the colimArrow into the codomain y
+(** we need that the colimArrow into the codomain y
    is a colimit for the chain in arrow C *)
 Definition colimArrow_arrow_cocone
     {d : chain C} {y : C}
@@ -235,7 +235,7 @@ Proof.
   - abstract (intros u v e; apply id_left).
 Defined.
 
-(* We also need that y is a colimit for the chain on
+(** We also need that y is a colimit for the chain on
    the codomains *)
 Definition cocone_arrow_chain_y_cocone_isColimCocone
     {d : chain C} {y : C}
@@ -331,7 +331,7 @@ Definition colimArrow_arrow_ColimCocone
   ColimCocone (cocone_arrow_chain ccy) :=
     make_ColimCocone _ _ _ (colimArrow_arrow_cocone_isColimCocone ccy).
 
-(* now we can show that the sliced R functor is omega small
+(** now we can show that the sliced R functor is omega small
    whenever the L functor preserves chains in arrow C *)
 Lemma FR_slice_omega_small_if_L_omega_small (F : Ff C) :
     preserves_colimits_of_shape (fact_L F) nat_graph
@@ -367,7 +367,7 @@ Proof.
     ).
 Qed.
 
-(* we get some issues with equality of diagrams, but
+(** we get some issues with equality of diagrams, but
    given a chain d of functorial factorizations,
    the chain of middle objects of F ⊗ d is
    in fact the same as the cocone we just constructed
@@ -395,7 +395,7 @@ Proof.
     ).
 Defined.
 
-(* The ColimCocone we get from the R map of F being omega small,
+(** The ColimCocone we get from the R map of F being omega small,
    corrected for the equality of diagrams *)
 Definition FR_slice_colimcocone_over_pointwise_tensored
     (F : Ff C)
@@ -408,13 +408,13 @@ Proof.
   set (ccpointwise := Ff_cocone_pointwise_R d f).
   set (isHRCC' := HR _ _ ccpointwise).
 
-  (* correct codomain with equality of diagrams *)
+  (** correct codomain with equality of diagrams *)
   set (eqdiag := fact_cocone_chain_eq_chain_pointwise_tensored F d f).
   set (isHRCC := eq_diag_iscolimcocone _ eqdiag isHRCC').
   exact (make_ColimCocone _ _ _ isHRCC).
 Defined.
 
-(* The z-iso on middle objects we obtain from this ColimCocone
+(** The z-iso on middle objects we obtain from this ColimCocone
    to the colimit we obtain from CC itself on this diagram.
    This isomorphism is the one we need for the isomorphism of
    functorial factorizations. *)
@@ -437,7 +437,7 @@ Proof.
   exact (_,, base_mor).
 Defined.
 
-(* colimIn _ v to the ColimCocone with R(colimArrow) as vertex
+(** colimIn _ v to the ColimCocone with R(colimArrow) as vertex
    is the same as the right functor of F applied to
    colimIn (ChainsFf CC d) v, since this is how we defined
    ChainsFf CC d
@@ -456,7 +456,7 @@ Proof.
   use (section_disp_on_eq_morphisms F); reflexivity.
 Qed.
 
-(* Show that the base_iso we just defined in fact gives a
+(** Show that the base_iso we just defined in fact gives a
    morphism of three C, pointwise *)
 Lemma FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_pointwise_three_comm
     (F : Ff C)
@@ -514,7 +514,7 @@ Proof.
     apply id_right.
 Qed.
 
-(* define the natural transformation we want from
+(** define the natural transformation we want from
    (F ⊗_{Ff_mon} (colim CL)) (colim FfCC)
    using the z_iso we got from the smallness. *)
 Definition FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_data
@@ -532,7 +532,7 @@ Proof.
   exact (FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_pointwise_three_comm F d HR f).
 Defined.
 
-(* this proof is a mess, but I had to rewrite γ within a
+(** this proof is a mess, but I had to rewrite γ within a
    #F γ... *)
 Lemma FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_axioms
     (F : Ff C)
@@ -595,7 +595,7 @@ Definition FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor
   (F ⊗_{Ff_mon} (colim CL)) --> (colim FfCC) :=
     (_,, FR_lt_preserves_colim_impl_Ff_lt_preserves_colim_mor_axioms F d HR).
 
-(* Use the morphism to show that indeed, F in Ff C
+(** Use the morphism to show that indeed, F in Ff C
   has the smallness property if fact_R F does*)
 Lemma FR_lt_preserves_colim_impl_Ff_lt_preserves_colim
     (F : Ff C)
@@ -666,7 +666,7 @@ Context (HF : isColimCocone _ _
         (base_mor := isColim_is_z_iso _ FfCCbase _ _ HF)
         (Ffiso := (_,, base_mor) : z_iso _ _).
 
-(* commutativity of project_cocone for
+(** commutativity of project_cocone for
     pr1_category and monoidal_left_tensor *)
 Section ProjectCoconeComm.
 
@@ -697,7 +697,7 @@ Qed.
 
 End ProjectCoconeComm.
 
-(* showing that the morphism induced the the universal
+(** showing that the morphism induced the the universal
 property of the colimit in Ff C is indeed an LNWFS morphism.
 we do this by reducing it to the pointwise case. *)
 Section DispMor.
@@ -782,7 +782,7 @@ Proof.
     abstract (
       exact (Ff_lt_preserves_colim_impl_LNWFS_lt_preserves_colim_mor_disp HF)
     ).
-  - (* showing isomorphism is easy, since we know that the base morphism is an isomorphism *)
+  - (** showing isomorphism is easy, since we know that the base morphism is an isomorphism *)
     abstract (
       apply LNWFS_inv_in_precat_if_Ff_inv_in_precat;
       exact (Ff_lt_preserves_colim_impl_LNWFS_lt_preserves_colim_inv_in_precat HF)

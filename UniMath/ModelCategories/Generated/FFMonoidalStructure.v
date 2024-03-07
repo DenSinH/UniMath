@@ -36,7 +36,7 @@ Section Ff_composition.
 
 Context {C : category}.
 
-(* F' ⊗ F (compose left factors) *)
+(** F' ⊗ F (compose left factors) *)
 Definition Ff_lcomp_data (F' F : Ff C) : section_disp_data (three_disp C).
 Proof.
   use tpair.
@@ -87,7 +87,7 @@ Proof.
     set (l'rf := fact_L F' rf).
     set (r'rf := fact_R F' rf).
     apply subtypePath; [intro; apply isapropdirprod; apply homset_property|].
-    (* complex rewrite *)
+    (** complex rewrite *)
     cbn.
     rewrite (section_disp_id F).
     (* cbn.
